@@ -18,7 +18,7 @@ export default function RootLayout({
       <body className="w-full h-screen overflow-auto">
         {children}
         <Toaster
-          position="bottom-center"
+          position="top-center"
           toastOptions={{
             classNames: {
               success:

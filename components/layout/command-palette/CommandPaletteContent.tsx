@@ -70,9 +70,9 @@ export default function CommandPaletteContent() {
         <Dialog.Portal>
           <Dialog.Overlay
             onClick={() => setOpen(false)}
-            className="dialog-overlay fixed inset-0 bg-black/40 backdrop-blur-sm"
+            className="dialog-overlay fixed inset-0 z-40 bg-black/40 backdrop-blur-sm"
           />
-          <Dialog.Content className="dialog-content fixed w-full max-w-xl px-4 focus:outline-none">
+          <Dialog.Content className="dialog-content fixed z-50 w-full max-w-xl px-4 focus:outline-none">
             <Dialog.Title className="sr-only">사이트 검색</Dialog.Title>
             <Command className="w-full overflow-hidden rounded-2xl border border-gray-100 bg-white text-sm shadow-2xl">
               <div className="flex items-center border-b border-gray-100 px-4">
