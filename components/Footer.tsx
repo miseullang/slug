@@ -1,36 +1,32 @@
 import Link from "next/link";
-import {
-  CommandLineIcon,
-  EnvelopeIcon,
-  PhoneIcon,
-} from "@heroicons/react/24/solid";
+import { CommandLineIcon, EnvelopeIcon } from "@heroicons/react/24/solid";
 
 export default function Footer() {
   return (
-    <footer>
+    <footer className="w-full bg-gray-900 text-gray-300 transition-colors flex items-center justify-between py-10 px-20">
+      <p>copyright ©2025 All rights reserved by @miseullag</p>
       <nav>
-        <ul>
+        <ul className="flex flex-col gap-4">
           <li>
-            <Link href="/" className="flex items-center gap-2">
+            <Link
+              href="https://github.com/miseullang"
+              className="flex items-center gap-2 hover:text-gray-100"
+            >
               <CommandLineIcon className="w-5 h-5" />
               GitHub
             </Link>
           </li>
           <li>
-            <Link href="/about" className="flex items-center gap-2">
+            <Link
+              href="mailto:miseullag@gmail.com"
+              className="flex items-center gap-2  hover:text-gray-100"
+            >
               <EnvelopeIcon className="w-5 h-5" />
               Email
             </Link>
           </li>
-          <li>
-            <Link href="/contact" className="flex items-center gap-2">
-              <PhoneIcon className="w-5 h-5" />
-              Phone
-            </Link>
-          </li>
         </ul>
       </nav>
-      copyright ©2025 All rights reserved by miseullag
     </footer>
   );
 }
