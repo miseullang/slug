@@ -22,7 +22,7 @@ export default function RootLayout({
           toastOptions={{
             classNames: {
               success:
-                "bg-white text-gray-900 shadow-lg",
+                "bg-gray-900 text-gray-100 shadow-lg",
               error: "bg-red-100 text-red-900 border border-red-200 shadow-lg",
             },
           }}

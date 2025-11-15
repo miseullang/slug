@@ -16,14 +16,14 @@ import { toast } from "sonner";
 
 export default function PostItem() {
   return (
-    <Link href="/post/1" className="w-[350px] flex flex-col gap-4 group">
-      <figure className="w-[350px] h-[240px] relative group-hover:translate-y-[-10px] transition-all duration-300">
+    <Link href="/post/1" className="w-[300px] flex flex-col gap-4 group">
+      <figure className="w-[300px] h-[200px] relative group-hover:translate-y-[-10px] transition-all duration-300">
         <Image
           src={BG_IMAGE}
           alt="bg"
           fill
-          className="object-cover aspect-ratio-350/240 rounded-3xl"
-          sizes="350px"
+          className="object-cover aspect-ratio-300/200 rounded-3xl"
+          sizes="300px"
         />
         <Tooltip>
           <TooltipTrigger
