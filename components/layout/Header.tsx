@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import CommandPalette from "./CommandPalette";
+import CommandPalette from "./command-palette/CommandPalette";
 
 export default function Header() {
   return (
