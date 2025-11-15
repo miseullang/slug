@@ -7,7 +7,7 @@ export default function Home() {
   return (
     <div>
       <Header />
-      <div className="p-10 flex gap-10">
+      <div className="px-10 py-20 flex gap-10">
         <aside className="flex flex-col gap-4 min-w-[180px] max-w-[240px]">
           <h2 className="flex-shrink-0 text-2xl font-bold">카테고리</h2>
           <Category />
