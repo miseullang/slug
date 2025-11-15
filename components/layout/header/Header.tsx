@@ -1,7 +1,8 @@
 "use client";
 
 import Link from "next/link";
-import CommandPalette from "./command-palette/CommandPalette";
+import CommandPalette from "../command-palette/CommandPalette";
+import HeaderMenu from "./HeaderMenu";
 
 export default function Header() {
   return (
@@ -10,9 +11,9 @@ export default function Header() {
         <h1 className="text-4xl font-bold italic">SLUG</h1>
       </Link>
 
-      <nav className="flex items-center gap-2">
-        <CommandPalette />
-      </nav>
+      <HeaderMenu />
+
+      <CommandPalette />
     </header>
   );
 }

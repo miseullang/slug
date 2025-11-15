@@ -10,6 +10,8 @@ export default function Footer() {
           <li>
             <Link
               href="https://github.com/miseullang"
+              target="_blank"
+              rel="noopener noreferrer"
               className="flex items-center gap-2 hover:text-gray-100"
             >
               <CommandLineIcon className="w-5 h-5" />
@@ -19,6 +21,8 @@ export default function Footer() {
           <li>
             <Link
               href="mailto:miseullag@gmail.com"
+              target="_blank"
+              rel="noopener noreferrer"
               className="flex items-center gap-2  hover:text-gray-100"
             >
               <EnvelopeIcon className="w-5 h-5" />
