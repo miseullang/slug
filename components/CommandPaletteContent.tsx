@@ -72,9 +72,9 @@ export default function CommandPaletteContent() {
             onClick={() => setOpen(false)}
             className="fixed inset-0 bg-black/40 backdrop-blur-sm data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out data-[state=open]:fade-in"
           />
-          <Dialog.Content className="fixed inset-0 flex items-center justify-center px-4 data-[state=open]:animate-in data-[state=open]:fade-in-0 data-[state=open]:zoom-in-95 data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95 focus:outline-none">
+          <Dialog.Content className="fixed left-1/2 top-1/2 w-full max-w-xl -translate-x-1/2 -translate-y-1/2 px-4 data-[state=open]:animate-in data-[state=open]:fade-in-0 data-[state=open]:zoom-in-95 data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95 focus:outline-none">
             <Dialog.Title className="sr-only">사이트 검색</Dialog.Title>
-            <Command className="w-full max-w-xl overflow-hidden rounded-2xl border border-gray-100 bg-white text-sm shadow-2xl">
+            <Command className="w-full overflow-hidden rounded-2xl border border-gray-100 bg-white text-sm shadow-2xl">
               <div className="flex items-center border-b border-gray-100 px-4">
                 <MagnifyingGlassIcon className="mr-2 h-4 w-4 text-gray-400" />
                 <Command.Input
