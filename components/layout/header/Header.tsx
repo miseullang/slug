@@ -11,12 +11,10 @@ import { Toggle } from "@/components/ui/toggle";
 import { MoonIcon, SunIcon } from "@heroicons/react/24/solid";
 
 export default function Header() {
-  const [isDarkMode, setIsDarkMode] = useState(false);
-
-  useEffect(() => {
-    if (typeof document === "undefined") return;
-    setIsDarkMode(document.documentElement.classList.contains("dark"));
-  }, []);
+  const [isDarkMode, setIsDarkMode] = useState(() => {
+    if (typeof document === "undefined") return false;
+    return document.documentElement.classList.contains("dark");
+  });
 
   useEffect(() => {
     if (typeof document === "undefined") return;
