@@ -185,6 +185,7 @@
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
   --radius-xl: calc(var(--radius) + 4px);
+  --bg-black: #0f172a;
 }
 
 body {
@@ -196,7 +197,7 @@ body {
 
 .header-link {
   position: relative;
-  color: #0f172a;
+  color: inherit;
 }
 
 .header-link::after {

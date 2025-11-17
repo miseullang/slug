@@ -28,7 +28,7 @@ export default function PostItem() {
         <Tooltip>
           <TooltipTrigger
             className="absolute right-4 -bottom-4 z-10 rounded-full
-           border-3 border-white bg-lime-300 px-3 py-1 text-sm font-semibold text-gray-700"
+           border-4 border-white dark:border-black bg-lime-300 px-3 py-1 text-sm font-semibold text-gray-700"
           >
             <ChatBubbleLeftEllipsisIcon className="w-4 h-4 inline-block mr-1" />
             3
@@ -39,7 +39,7 @@ export default function PostItem() {
         </Tooltip>
       </figure>
       <div className="flex flex-col gap-2 px-2">
-        <p className="text-sm text-gray-700">작성일 | 2025.11.12</p>
+        <p className="text-sm text-foreground/60">작성일 | 2025.11.12</p>
         <h3 className="text-xl font-bold line-clamp-1">
           패키지 매니저 4종(npm, yarn, yarn berry, pnpm) 제대로 알고 쓰기
         </h3>
@@ -66,7 +66,7 @@ export default function PostItem() {
           </ul>
           <button
             type="button"
-            className="flex items-center gap-1 opacity-0 scale-0 group-hover:opacity-100 group-hover:scale-100 transition-all duration-300 cursor-pointer text-sm font-semibold text-gray-700"
+            className="flex items-center gap-1 opacity-0 scale-0 group-hover:opacity-100 group-hover:scale-100 transition-all duration-300 cursor-pointer text-sm font-semibold text-foreground/70"
             onClick={(event) => {
               event.preventDefault();
               event.stopPropagation();

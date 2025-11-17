@@ -1,4 +1,8 @@
-import { HomeIcon } from "@heroicons/react/24/solid";
+import {
+  HomeIcon,
+  UserCircleIcon,
+  NewspaperIcon,
+} from "@heroicons/react/24/solid";
 import Link from "next/link";
 
 const menuItems = [
@@ -9,25 +13,33 @@ const menuItems = [
   },
   {
     href: "/about",
-    icon: HomeIcon,
+    icon: UserCircleIcon,
     label: "About",
   },
   {
     href: "/posts",
-    icon: HomeIcon,
+    icon: NewspaperIcon,
     label: "Posts",
   },
 ];
 
-export default function HeaderMenu() {
+type HeaderMenuProps = {
+  isDarkMode: boolean;
+};
+
+export default function HeaderMenu({ isDarkMode }: HeaderMenuProps) {
   return (
     <nav>
-      <ul className="flex items-center gap-4">
+      <ul
+        className={`flex items-center gap-4 ${
+          isDarkMode ? "text-black" : "text-white"
+        }`}
+      >
         {menuItems.map((item) => (
           <li key={item.href}>
             <Link
               href={item.href}
-              className="header-link inline-flex items-center gap-2 pb-1"
+              className="header-link inline-flex transform-gpu translate-y-0.5 items-center gap-2 pb-1"
             >
               <item.icon className="w-6 h-6" />
               <span>{item.label}</span>
