@@ -19,7 +19,7 @@ export default function Footer() {
             href="https://github.com/miseullang"
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-3 rounded-full border border-white/50 bg-[#f8ffe5]/80 px-5 py-2 text-lg font-medium text-black shadow-inner shadow-white/40 transition-all hover:-translate-y-0.5 hover:bg-white"
+            className="inline-flex items-center gap-3 rounded-full border border-white/50 bg-[#edffba]/80 px-5 py-2 text-lg font-medium text-black shadow-inner shadow-white/40 transition-all hover:-translate-y-0.5 hover:bg-white/30"
           >
             <CommandLineIcon className="h-5 w-5" />
             GitHub
@@ -28,7 +28,7 @@ export default function Footer() {
             href="mailto:miseullag@gmail.com"
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-3 rounded-full border border-white/50 bg-[#f8ffe5]/80 px-5 py-2 text-lg font-medium text-black shadow-inner shadow-white/40 transition-all hover:-translate-y-0.5 hover:bg-white"
+            className="inline-flex items-center gap-3 rounded-full border border-white/40 bg-[#edffba]/80 px-5 py-2 text-lg font-medium text-black shadow-inner shadow-white/40 transition-all hover:-translate-y-0.5 hover:bg-white/30"
           >
             <EnvelopeIcon className="h-5 w-5" />
             Email
