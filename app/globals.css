@@ -218,6 +218,26 @@ body {
   transform-origin: left;
 }
 
+.category-link {
+  position: relative;
+  padding-left: 1.75rem;
+}
+
+.category-link::before {
+  content: ">";
+  position: absolute;
+  left: 0.75rem;
+  color: currentColor;
+  opacity: 0;
+  transform: translateX(-6px);
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.category-link:hover::before {
+  opacity: 1;
+  transform: translateX(0);
+}
+
 .main-gradient {
   background: white;
 }

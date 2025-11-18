@@ -18,7 +18,7 @@ export default function Category() {
         <li key={name}>
           <Link
             href="/"
-            className="block rounded-full px-4 py-2 text-lg text-foreground/80 transition hover:text-foreground/60"
+            className="category-link block rounded-full px-4 py-2 text-lg text-foreground/80 transition hover:text-foreground/60 hover:translate-x-1"
           >
             {name}
           </Link>
