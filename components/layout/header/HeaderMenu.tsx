@@ -23,18 +23,10 @@ const menuItems = [
   },
 ];
 
-type HeaderMenuProps = {
-  isDarkMode: boolean;
-};
-
-export default function HeaderMenu({ isDarkMode }: HeaderMenuProps) {
+export default function HeaderMenu() {
   return (
     <nav>
-      <ul
-        className={`flex items-center gap-4 ${
-          isDarkMode ? "text-white" : "text-black"
-        }`}
-      >
+      <ul className="flex items-center gap-4">
         {menuItems.map((item) => (
           <li key={item.href}>
             <Link
