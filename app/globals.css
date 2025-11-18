@@ -218,6 +218,20 @@ body {
   transform-origin: left;
 }
 
+.main-gradient {
+  background: white;
+}
+
+.dark .main-gradient {
+  background: linear-gradient(
+    to bottom,
+    #00000000 0%,
+    #00000070 10%,
+    #00000090 25%,
+    #000000 60%
+  );
+}
+
 .line-clamp-1,
 .line-clamp-2 {
   display: -webkit-box;

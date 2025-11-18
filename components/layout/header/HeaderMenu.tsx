@@ -32,7 +32,7 @@ export default function HeaderMenu({ isDarkMode }: HeaderMenuProps) {
     <nav>
       <ul
         className={`flex items-center gap-4 ${
-          isDarkMode ? "text-black" : "text-white"
+          isDarkMode ? "text-white" : "text-black"
         }`}
       >
         {menuItems.map((item) => (
