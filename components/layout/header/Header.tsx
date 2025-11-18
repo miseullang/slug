@@ -31,14 +31,14 @@ export default function Header() {
 
   return (
     <header className="flex items-center justify-between p-5">
-      <nav className="flex items-center  w-fit px-4 py-2 rounded-full transition-colors">
+      <nav className="flex items-center gap-22 w-fit px-4 py-2 rounded-full transition-colors">
         <Toggle
           aria-label="다크 모드 전환"
           variant="outline"
           size="lg"
           pressed={isDarkMode}
           onPressedChange={setIsDarkMode}
-          className="border-none transform-3d -translate-x-2 translate-y-1 bg-transparent hover:bg-transparent focus-visible:ring-0 focus-visible:border-transparent data-[state=on]:bg-transparent"
+          className="border-none shadow-none cursor-pointer transform-3d bg-transparent hover:bg-transparent focus-visible:ring-0 focus-visible:border-transparent data-[state=on]:bg-transparent"
         >
           <h1 className="text-2xl font-bold">
             {isDarkMode ? (
@@ -48,9 +48,9 @@ export default function Header() {
             )}
           </h1>
           {isDarkMode ? (
-            <MoonIcon className="w-6! h-6! text-white" />
+            <MoonIcon className="w-6! h-6!  -translate-x-1 translate-y-1 text-white" />
           ) : (
-            <SunIcon className="w-6! h-6! text-black" />
+            <SunIcon className="w-6! h-6!  -translate-x-1 translate-y-1 text-black" />
           )}
         </Toggle>
 

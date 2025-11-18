@@ -39,7 +39,7 @@ export default function HeaderMenu({ isDarkMode }: HeaderMenuProps) {
           <li key={item.href}>
             <Link
               href={item.href}
-              className="header-link inline-flex transform-gpu translate-y-0.5 items-center gap-2 pb-1"
+              className="header-link inline-flex transform-gpu translate-y-1.5 items-center gap-2 pb-1"
             >
               <item.icon className="w-6 h-6" />
               <span>{item.label}</span>
