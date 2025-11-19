@@ -1,0 +1,10 @@
+language: ko
+
+review:
+  tone: friendly
+  high_level_summary: true
+  code_suggestions: true
+
+auto_review:
+  enabled: true
+  trigger: pull_request
