@@ -10,6 +10,16 @@ type Star = {
   phase: number;
 };
 
+type ShootingStar = {
+  x: number;
+  y: number;
+  vx: number;
+  vy: number;
+  life: number;
+  maxLife: number;
+  length: number;
+};
+
 const STAR_DENSITY = 0.00012;
 const MIN_STARS = 60;
 
@@ -17,7 +27,11 @@ export default function CosmicBackground() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const animationRef = useRef<number | null>(null);
   const starsRef = useRef<Star[]>([]);
+  const meteorsRef = useRef<ShootingStar[]>([]);
   const sizeRef = useRef({ width: 0, height: 0 });
+  const lastFrameRef = useRef(0);
+  const meteorTimerRef = useRef(0);
+  const meteorIntervalRef = useRef(3);
   const [isDarkMode, setIsDarkMode] = useState(() => {
     if (typeof document === "undefined") return false;
     return document.documentElement.classList.contains("dark");
@@ -51,6 +65,10 @@ export default function CosmicBackground() {
         animationRef.current = null;
       }
       ctx.clearRect(0, 0, canvas.width, canvas.height);
+      meteorsRef.current = [];
+      meteorTimerRef.current = 0;
+      meteorIntervalRef.current = 3;
+      lastFrameRef.current = 0;
     };
 
     if (!isDarkMode) {
@@ -69,6 +87,24 @@ export default function CosmicBackground() {
         twinkleSpeed: 1.8 + Math.random() * 2.2,
         phase: Math.random() * Math.PI * 2,
       }));
+    };
+
+    const spawnMeteor = () => {
+      const { width } = sizeRef.current;
+      const startX = width * 0.4 + Math.random() * width * 0.4;
+      const speed = 600 + Math.random() * 300;
+      const angle = (35 + Math.random() * 8) * (Math.PI / 180);
+      meteorsRef.current.push({
+        x: startX,
+        y: -40,
+        vx: -Math.cos(angle) * speed,
+        vy: Math.sin(angle) * speed,
+        life: 0,
+        maxLife: 1.8 + Math.random() * 1.2,
+        length: 120 + Math.random() * 80,
+      });
+      meteorIntervalRef.current = 2 + Math.random() * 3;
+      meteorTimerRef.current = 0;
     };
 
     const resize = () => {
@@ -92,6 +128,16 @@ export default function CosmicBackground() {
       const { width, height } = sizeRef.current;
       ctx.clearRect(0, 0, width, height);
       const time = timestamp / 600;
+      const delta =
+        lastFrameRef.current === 0
+          ? 0
+          : (timestamp - lastFrameRef.current) / 1000;
+      lastFrameRef.current = timestamp;
+
+      meteorTimerRef.current += delta;
+      if (meteorTimerRef.current > meteorIntervalRef.current) {
+        spawnMeteor();
+      }
 
       for (const star of starsRef.current) {
         const twinkle = (Math.sin(time * star.twinkleSpeed + star.phase) + 1) / 2;
@@ -104,6 +150,40 @@ export default function CosmicBackground() {
         ctx.fillStyle = "#ffffff";
         ctx.fill();
       }
+
+      ctx.globalCompositeOperation = "lighter";
+      meteorsRef.current = meteorsRef.current.filter((meteor) => {
+        meteor.life += delta;
+        meteor.x += meteor.vx * delta;
+        meteor.y += meteor.vy * delta;
+
+        const angle = Math.atan2(meteor.vy, meteor.vx);
+        const tailX = meteor.x - Math.cos(angle) * meteor.length;
+        const tailY = meteor.y - Math.sin(angle) * meteor.length;
+
+        const gradient = ctx.createLinearGradient(
+          meteor.x,
+          meteor.y,
+          tailX,
+          tailY
+        );
+        gradient.addColorStop(0, "rgba(255,255,255,0.9)");
+        gradient.addColorStop(1, "rgba(255,255,255,0)");
+
+        ctx.beginPath();
+        ctx.lineWidth = 2;
+        ctx.strokeStyle = gradient;
+        ctx.moveTo(meteor.x, meteor.y);
+        ctx.lineTo(tailX, tailY);
+        ctx.stroke();
+
+        return (
+          meteor.life < meteor.maxLife &&
+          meteor.x < width + meteor.length &&
+          meteor.y < height + meteor.length
+        );
+      });
+      ctx.globalCompositeOperation = "source-over";
 
       ctx.globalAlpha = 1;
       animationRef.current = requestAnimationFrame(draw);
