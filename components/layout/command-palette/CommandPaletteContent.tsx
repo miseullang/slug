@@ -57,10 +57,10 @@ export default function CommandPaletteContent() {
       <button
         type="button"
         onClick={() => setOpen(true)}
-        className="flex items-center gap-2 rounded-full border border-gray-200 px-4 py-2 text-sm text-gray-600 transition hover:bg-gray-100 hover:text-gray-900"
+        className="flex items-center gap-2 rounded-full border border-foreground/20 px-4 py-2 text-sm text-gray-600 transition hover:bg-gray-100 hover:text-gray-900"
       >
-        <MagnifyingGlassIcon className="h-4 w-4" />
-        <span className="hidden sm:inline">무엇을 찾고 있나요?</span>
+        <MagnifyingGlassIcon className="h-4 w-4 text-foreground dark:text-gray-300" />
+        <span className="hidden sm:inline text-foreground dark:text-gray-300">무엇을 찾고 있나요?</span>
         <span className="rounded-md border border-dashed border-gray-300 px-1.5 py-0.5 text-[11px] font-semibold text-gray-400">
           ⌘K
         </span>

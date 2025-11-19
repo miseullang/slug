@@ -1,4 +1,8 @@
-import { HomeIcon } from "@heroicons/react/24/solid";
+import {
+  HomeIcon,
+  UserCircleIcon,
+  NewspaperIcon,
+} from "@heroicons/react/24/solid";
 import Link from "next/link";
 
 const menuItems = [
@@ -9,12 +13,12 @@ const menuItems = [
   },
   {
     href: "/about",
-    icon: HomeIcon,
+    icon: UserCircleIcon,
     label: "About",
   },
   {
     href: "/posts",
-    icon: HomeIcon,
+    icon: NewspaperIcon,
     label: "Posts",
   },
 ];
@@ -27,7 +31,7 @@ export default function HeaderMenu() {
           <li key={item.href}>
             <Link
               href={item.href}
-              className="header-link inline-flex items-center gap-2 pb-1"
+              className="header-link inline-flex transform-gpu translate-y-1.5 items-center gap-2 pb-1"
             >
               <item.icon className="w-6 h-6" />
               <span>{item.label}</span>
