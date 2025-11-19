@@ -1,4 +1,3 @@
-import Link from "next/link";
 import { CommandLineIcon, EnvelopeIcon } from "@heroicons/react/24/solid";
 
 export default function Footer() {
@@ -15,7 +14,7 @@ export default function Footer() {
         </div>
 
         <nav className="flex flex-col gap-4 min-w-[120px]">
-          <Link
+          <a
             href="https://github.com/miseullang"
             target="_blank"
             rel="noopener noreferrer"
@@ -23,16 +22,16 @@ export default function Footer() {
           >
             <CommandLineIcon className="h-5 w-5" />
             GitHub
-          </Link>
-          <Link
-            href="mailto:miseullag@gmail.com"
+          </a>
+          <a
+            href="mailto:miseullang@gmail.com"
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center gap-3 rounded-full border border-white/40 bg-[#edffba]/80 px-5 py-2 text-lg font-medium text-black shadow-inner shadow-white/40 transition-all hover:-translate-y-0.5 hover:bg-white/50"
           >
             <EnvelopeIcon className="h-5 w-5" />
             Email
-          </Link>
+          </a>
         </nav>
       </div>
     </footer>
