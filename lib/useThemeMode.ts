@@ -5,36 +5,24 @@ import { useCallback, useEffect, useState } from "react";
 const STORAGE_KEY = "theme";
 
 export function useThemeMode() {
-  const [isDarkMode, setIsDarkMode] = useState(false);
-  const [isReady, setIsReady] = useState(false);
+  const isClient = typeof window !== "undefined";
 
-  useEffect(() => {
-    if (typeof window === "undefined") {
-      setIsReady(true);
-      return;
-    }
+  const [isDarkMode, setIsDarkMode] = useState(() => {
+    if (!isClient) return false;
     const stored = window.localStorage.getItem(STORAGE_KEY);
-    if (stored) {
-      setIsDarkMode(stored === "dark");
-    } else {
-      setIsDarkMode(window.document.documentElement.classList.contains("dark"));
-    }
-    setIsReady(true);
-  }, []);
+    if (stored) return stored === "dark";
+    return window.document.documentElement.classList.contains("dark");
+  });
 
   useEffect(() => {
-    if (!isReady) return;
-    if (typeof document !== "undefined") {
-      document.documentElement.classList.toggle("dark", isDarkMode);
-    }
-    if (typeof window !== "undefined") {
-      window.localStorage.setItem(STORAGE_KEY, isDarkMode ? "dark" : "light");
-    }
-  }, [isDarkMode, isReady]);
+    if (!isClient) return;
+    document.documentElement.classList.toggle("dark", isDarkMode);
+    window.localStorage.setItem(STORAGE_KEY, isDarkMode ? "dark" : "light");
+  }, [isClient, isDarkMode]);
 
   const setTheme = useCallback((value: boolean) => {
     setIsDarkMode(value);
   }, []);
 
-  return { isDarkMode, setTheme, isReady };
+  return { isDarkMode, setTheme, isReady: isClient };
 }

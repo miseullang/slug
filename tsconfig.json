@@ -9,6 +9,7 @@
     "esModuleInterop": true,
     "module": "esnext",
     "moduleResolution": "bundler",
+    "baseUrl": ".",
     "resolveJsonModule": true,
     "isolatedModules": true,
     "jsx": "react-jsx",
@@ -21,7 +22,8 @@
     "paths": {
       "@/*": ["./*"],
       "@app/*": ["./app/*"],
-      "@assets/*": ["./app/assets/*"]
+      "@assets/*": ["./app/assets/*"],
+      "contentlayer/generated": [".contentlayer/generated"]
     }
   },
   "include": [
@@ -30,7 +32,8 @@
     "**/*.tsx",
     ".next/types/**/*.ts",
     ".next/dev/types/**/*.ts",
-    "**/*.mts"
+    "**/*.mts",
+    ".contentlayer/generated"
   ],
   "exclude": ["node_modules"]
 }
