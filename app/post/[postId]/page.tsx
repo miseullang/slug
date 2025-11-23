@@ -1,7 +1,14 @@
 import { allPosts } from "contentlayer/generated";
 import { Metadata } from "next";
 import { notFound } from "next/navigation";
-import MDXContent from "@/components/mdx/MDXContent";
+import dynamic from "next/dynamic";
+
+const MDXContentWrapper = dynamic(
+  () => import("@/components/mdx/MDXContentWrapper"),
+  {
+    loading: () => <div className="animate-pulse">Loading...</div>,
+  }
+);
 
 type PostPageProps = {
   params: Promise<{ postId: string }>;
@@ -9,10 +16,6 @@ type PostPageProps = {
 
 const getPost = (postId: string) =>
   allPosts.find((post) => post.slug === postId);
-
-export function generateStaticParams() {
-  return allPosts.map((post) => ({ postId: post.slug }));
-}
 
 export async function generateMetadata({
   params,
@@ -61,7 +64,7 @@ export default async function PostPage({ params }: PostPageProps) {
       </header>
 
       <div className="flex flex-col gap-2 rounded-3xl border border-foreground/5 bg-background/60 p-6 shadow-2xl shadow-gray-900/10">
-        <MDXContent code={post.body.code} />
+        <MDXContentWrapper code={post.body.code} />
       </div>
     </article>
   );

@@ -19,9 +19,13 @@ var Post = defineDocumentType(() => ({
 }));
 var contentlayer_config_default = makeSource({
   contentDirPath: "content",
-  documentTypes: [Post]
+  documentTypes: [Post],
+  mdx: {
+    rehypePlugins: [],
+    remarkPlugins: []
+  }
 });
 export {
   contentlayer_config_default as default
 };
-//# sourceMappingURL=compiled-contentlayer-config-4UPDXI54.mjs.map
+//# sourceMappingURL=compiled-contentlayer-config-UWBOSAGQ.mjs.map

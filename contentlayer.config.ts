@@ -21,4 +21,8 @@ const Post = defineDocumentType(() => ({
 export default makeSource({
   contentDirPath: "content",
   documentTypes: [Post],
+  mdx: {
+    rehypePlugins: [],
+    remarkPlugins: [],
+  },
 });
