@@ -20,6 +20,7 @@ export type Post = {
   /** MDX file body */
   body: MDX
   slug: string
+  headings: json
 }  
 
 /** Nested types */

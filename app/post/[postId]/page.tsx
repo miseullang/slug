@@ -1,14 +1,8 @@
 import { allPosts } from "contentlayer/generated";
 import { Metadata } from "next";
 import { notFound } from "next/navigation";
-import dynamic from "next/dynamic";
-
-const MDXContentWrapper = dynamic(
-  () => import("@/components/mdx/MDXContentWrapper"),
-  {
-    loading: () => <div className="animate-pulse">Loading...</div>,
-  }
-);
+import { PostArticle } from "@/components/PostArticle";
+import Header from "@/components/layout/header/Header";
 
 type PostPageProps = {
   params: Promise<{ postId: string }>;
@@ -38,34 +32,10 @@ export default async function PostPage({ params }: PostPageProps) {
     notFound();
   }
 
-  const formattedDate = new Intl.DateTimeFormat("ko-KR", {
-    year: "numeric",
-    month: "long",
-    day: "numeric",
-  }).format(new Date(post.date));
-
   return (
-    <article className="prose prose-neutral dark:prose-invert mx-auto max-w-3xl py-12">
-      <header className="mb-10 space-y-4">
-        <p className="text-sm text-foreground/70">{formattedDate}</p>
-        <h1 className="text-4xl font-bold tracking-tight">{post.title}</h1>
-        {post.tags?.length ? (
-          <ul className="flex flex-wrap gap-2 text-sm">
-            {post.tags.map((tag) => (
-              <li
-                key={tag}
-                className="rounded-full border border-foreground/20 px-3 py-1 text-foreground/80"
-              >
-                #{tag}
-              </li>
-            ))}
-          </ul>
-        ) : null}
-      </header>
-
-      <div className="flex flex-col gap-2 rounded-3xl border border-foreground/5 bg-background/60 p-6 shadow-2xl shadow-gray-900/10">
-        <MDXContentWrapper code={post.body.code} />
-      </div>
-    </article>
+    <>
+      <Header />
+      <PostArticle post={post} />
+    </>
   );
 }
