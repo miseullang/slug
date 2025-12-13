@@ -19,11 +19,8 @@ export function TableOfContents({ headings, activeId }: TableOfContentsProps) {
   return (
     <nav
       aria-label="Table of contents"
-      className="sticky top-24 hidden max-h-[calc(100vh-6rem)] overflow-y-auto px-10 lg:block self-start"
+      className="sticky top-24 hidden pt-12 max-h-[calc(100vh-6rem)] overflow-y-auto lg:block self-start"
     >
-      <h3 className="mb-3 text-xl font-semibold uppercase tracking-[0.12em] text-foreground/80">
-        목차
-      </h3>
       <ul className="space-y-2 text-sm">
         {headings.map((heading) => {
           const isActive = heading.id === activeId;

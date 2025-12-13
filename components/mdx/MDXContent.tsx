@@ -1,7 +1,7 @@
 "use client";
 /* eslint-disable react-hooks/static-components */
 
-import { HTMLAttributes, PropsWithChildren } from "react";
+import { ElementType, HTMLAttributes, PropsWithChildren } from "react";
 import { useMDXComponent } from "next-contentlayer/hooks";
 import { Callout } from "./Callout";
 import { CodeBlock, InlineCode } from "./CodeBlocks";
@@ -31,17 +31,17 @@ const UnorderedList = ({
   );
 };
 
-const ListItem = ({ className, ...props }: HTMLAttributes<HTMLLIElement>) => {
-  return <li className={cn("", className)} {...props} />;
-};
+const ListItem = ({ className, ...props }: HTMLAttributes<HTMLLIElement>) => (
+  <li className={cn("", className)} {...props} />
+);
 
-function createHeading(level: number) {
+function createHeading(level: 2 | 3 | 4) {
   const Component = ({
     className,
     children,
     ...props
   }: PropsWithChildren<HTMLAttributes<HTMLHeadingElement>>) => {
-    const Tag = `h${level}` as const;
+    const Tag = `h${level}` as ElementType;
 
     return (
       <Tag
