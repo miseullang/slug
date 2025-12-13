@@ -155,7 +155,7 @@ export function PostArticle({ post }: PostArticleProps) {
   );
 
   return (
-    <div className="grid items-start gap-10 lg:grid-cols-[250px_minmax(0,1fr)] px-10">
+    <div className="grid items-start gap-10 lg:grid-cols-[260px_minmax(0,1fr)] px-10">
       <TableOfContents headings={headings} activeId={activeId} />
 
       <article className="prose prose-neutral dark:prose-invert mx-auto max-w-4xl py-12">
