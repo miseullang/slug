@@ -23,7 +23,7 @@ type THProps = DetailedHTMLProps<
 type TDProps = THProps;
 
 export const Table = ({ className, children, ...props }: TableProps) => (
-  <div className="my-6 overflow-x-auto rounded-2xl border border-foreground/10 bg-white/70 shadow-sm backdrop-blur dark:bg-white/5">
+  <div className="my-6 overflow-x-auto rounded-2xl border border-foreground/10 bg-white/70 backdrop-blur dark:bg-white/5">
     <table
       className={cn(
         "w-full border-separate border-spacing-0 text-sm leading-6 text-foreground",

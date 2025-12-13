@@ -4,6 +4,8 @@ import { useEffect, useMemo, useState } from "react";
 import { Post } from "contentlayer/generated";
 import MDXContent from "./mdx/MDXContent";
 import { TableOfContents } from "./mdx/TableOfContents";
+import { Callout } from "./mdx/Callout";
+import { cn } from "@/lib/utils";
 
 type PostArticleProps = {
   post: Post;
@@ -175,6 +177,35 @@ export function PostArticle({ post }: PostArticleProps) {
             </ul>
           ) : null}
         </header>
+
+        {headings.length ? (
+          <div className="mb-8 lg:hidden">
+            <Callout variant="list">
+              <div className="mb-2 text-lg font-semibold text-foreground/80">
+                목차
+              </div>
+              <ul className="space-y-1 text-sm">
+                {headings.map((heading) => {
+                  const indent =
+                    heading.level === 3 ? "pl-3" : heading.level >= 4 ? "pl-5" : "";
+                  return (
+                    <li key={heading.id}>
+                      <a
+                        href={`#${heading.id}`}
+                        className={cn(
+                          "inline-block text-foreground/80 hover:text-foreground transition-colors",
+                          indent
+                        )}
+                      >
+                        {heading.title}
+                      </a>
+                    </li>
+                  );
+                })}
+              </ul>
+            </Callout>
+          </div>
+        ) : null}
 
         <div className="rounded-3xl">
           <MDXContent code={post.body.code} />

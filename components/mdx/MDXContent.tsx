@@ -25,7 +25,7 @@ const UnorderedList = ({
 }: HTMLAttributes<HTMLUListElement>) => {
   return (
     <ul
-      className={cn("my-4 list-disc list-inside space-y-2", className)}
+      className={cn("my-4 list-disc list-inside space-y-1", className)}
       {...props}
     />
   );
@@ -33,6 +33,13 @@ const UnorderedList = ({
 
 const ListItem = ({ className, ...props }: HTMLAttributes<HTMLLIElement>) => (
   <li className={cn("", className)} {...props} />
+);
+
+const Hr = ({ className, ...props }: HTMLAttributes<HTMLHRElement>) => (
+  <hr
+    className={cn("mt-4 border-t border-foreground/10", className)}
+    {...props}
+  />
 );
 
 function createHeading(level: 2 | 3 | 4) {
@@ -49,10 +56,10 @@ function createHeading(level: 2 | 3 | 4) {
         className={cn(
           "scroll-mt-32",
           level === 2
-            ? "mt-10 text-2xl font-bold tracking-tight"
+            ? "mt-10 text-2xl font-semibold tracking-tight"
             : level === 3
-              ? "mt-6 text-xl font-semibold"
-              : "mt-4 text-lg font-semibold",
+              ? "mt-6 text-xl font-medium"
+              : "mt-4 text-lg font-medium",
           className
         )}
       >
@@ -81,6 +88,7 @@ const components = {
   tr: TableRow,
   th: TableHeaderCell,
   td: TableCell,
+  hr: Hr,
   h2: H2,
   h3: H3,
   h4: H4,
