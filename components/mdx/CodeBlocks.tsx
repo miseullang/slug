@@ -60,8 +60,8 @@ export function CodeBlock({
     typeof rawCode === "string"
       ? rawCode
       : Array.isArray(rawCode)
-        ? rawCode.join("")
-        : "";
+      ? rawCode.join("")
+      : "";
 
   const langMatch = codeProps?.className?.match(/language-([\w-]+)/);
   const lang = langMatch?.[1]?.toLowerCase() ?? "text";
@@ -80,13 +80,13 @@ export function CodeBlock({
   };
 
   return (
-    <div className="overflow-hidden rounded-xl border border-foreground/10 bg-gray-950/80 shadow-lg">
+    <div className="overflow-hidden rounded-xl border border-foreground/10 bg-gray-950/80 shadow-lg my-4">
       <div className="flex items-center justify-between border-b border-foreground/10 px-4 py-2 text-xs uppercase tracking-wide">
         <span className={cn("font-semibold", colorClass)}>{lang}</span>
         <button
           type="button"
           onClick={handleCopy}
-          className="rounded-lg border border-foreground/15 px-3 py-1 text-[11px] font-medium text-foreground/80 transition hover:border-foreground/25 hover:text-foreground"
+          className="rounded-lg border cursor-pointer border-white/15 px-3 py-1 text-[11px] font-medium text-white/80 transition hover:border-white/25 hover:text-white"
         >
           {copied ? "Copied" : "Copy"}
         </button>
@@ -117,7 +117,7 @@ export function InlineCode({
     <code
       className={cn(
         isInline
-          ? "rounded-xs bg-gray-100 px-1.5 py-0.5 text-sm font-mono code-ligatures text-gray-800 dark:bg-gray-800 dark:text-gray-200"
+          ? "rounded-xs  px-1.5 py-0.5 text-sm font-mono code-ligatures bg-gray-800 text-gray-200"
           : "font-mono code-ligatures text-gray-200",
         className
       )}

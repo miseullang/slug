@@ -25,7 +25,7 @@ const UnorderedList = ({
 }: HTMLAttributes<HTMLUListElement>) => {
   return (
     <ul
-      className={cn("my-4 list-disc list-inside space-y-1", className)}
+      className={cn("px-2 list-disc list-inside space-y-1", className)}
       {...props}
     />
   );
@@ -37,7 +37,7 @@ const ListItem = ({ className, ...props }: HTMLAttributes<HTMLLIElement>) => (
 
 const Hr = ({ className, ...props }: HTMLAttributes<HTMLHRElement>) => (
   <hr
-    className={cn("mt-4 border-t border-foreground/10", className)}
+    className={cn("mt-4 mb-2 border-t border-foreground/10", className)}
     {...props}
   />
 );
