@@ -17,7 +17,7 @@ function extractHeadings(raw: string): Heading[] {
   const headings: Heading[] = [];
   const headingRegex = /^(#{2,4})\s+(.+)$/gm;
   const stripEmoji = (text: string) =>
-    text.replace(/[\p{Extended_Pictographic}\uFE0F]/gu, "");
+    text.replace(/\p{Extended_Pictographic}|\uFE0F/gu, "");
   let match: RegExpExecArray | null;
 
   while ((match = headingRegex.exec(raw))) {
@@ -28,7 +28,9 @@ function extractHeadings(raw: string): Heading[] {
     headings.push({
       level: hashes.length,
       title: safeText,
-      id: safeText ? slugger.slug(safeText) : slugger.slug(`heading-${headings.length + 1}`),
+      id: safeText
+        ? slugger.slug(safeText)
+        : slugger.slug(`heading-${headings.length + 1}`),
     });
   }
 

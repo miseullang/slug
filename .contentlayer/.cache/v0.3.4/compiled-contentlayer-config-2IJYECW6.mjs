@@ -33,7 +33,7 @@ function extractHeadings(raw) {
   slugger.reset();
   const headings = [];
   const headingRegex = /^(#{2,4})\s+(.+)$/gm;
-  const stripEmoji = (text) => text.replace(/[\p{Extended_Pictographic}\uFE0F]/gu, "");
+  const stripEmoji = (text) => text.replace(/\p{Extended_Pictographic}|\uFE0F/gu, "");
   let match;
   while (match = headingRegex.exec(raw)) {
     const hashes = match[1];
@@ -80,4 +80,4 @@ var contentlayer_config_default = makeSource({
 export {
   contentlayer_config_default as default
 };
-//# sourceMappingURL=compiled-contentlayer-config-SFCHPAMI.mjs.map
+//# sourceMappingURL=compiled-contentlayer-config-2IJYECW6.mjs.map
