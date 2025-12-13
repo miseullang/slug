@@ -9,8 +9,31 @@ type PostArticleProps = {
   post: Post;
 };
 
+type Heading = {
+  id: string;
+  title: string;
+  level: number;
+};
+
+const isHeading = (value: unknown): value is Heading => {
+  if (!value || typeof value !== "object") return false;
+  const { id, title, level } = value as {
+    id?: unknown;
+    title?: unknown;
+    level?: unknown;
+  };
+  return (
+    typeof id === "string" &&
+    typeof title === "string" &&
+    typeof level === "number"
+  );
+};
+
 export function PostArticle({ post }: PostArticleProps) {
-  const headings = useMemo(() => post.headings ?? [], [post.headings]);
+  const headings = useMemo<Heading[]>(() => {
+    if (!Array.isArray(post.headings)) return [];
+    return post.headings.filter(isHeading);
+  }, [post.headings]);
   const [activeId, setActiveId] = useState<string>();
 
   useEffect(() => {
@@ -132,10 +155,10 @@ export function PostArticle({ post }: PostArticleProps) {
   );
 
   return (
-    <div className="grid items-start gap-10 lg:grid-cols-[260px_minmax(0,1fr)]">
+    <div className="grid items-start gap-10 lg:grid-cols-[260px_minmax(0,1fr)] px-10">
       <TableOfContents headings={headings} activeId={activeId} />
 
-      <article className="prose prose-neutral dark:prose-invert mx-auto max-w-3xl py-12">
+      <article className="prose prose-neutral dark:prose-invert mx-auto max-w-4xl py-12">
         <header className="mb-10 space-y-4">
           <p className="text-sm text-foreground/70">{formattedDate}</p>
           <h1 className="text-4xl font-bold tracking-tight">{post.title}</h1>
@@ -144,16 +167,16 @@ export function PostArticle({ post }: PostArticleProps) {
               {post.tags.map((tag) => (
                 <li
                   key={tag}
-                  className="rounded-full border border-foreground/20 px-3 py-1 text-foreground/80"
+                  className="rounded-full bg-lime-200 px-4 py-1 text-foreground/80"
                 >
-                  #{tag}
+                  {tag}
                 </li>
               ))}
             </ul>
           ) : null}
         </header>
 
-        <div className="rounded-3xl border border-foreground/5 bg-background/60 p-6 shadow-2xl shadow-gray-900/10">
+        <div className="rounded-3xl">
           <MDXContent code={post.body.code} />
         </div>
       </article>
