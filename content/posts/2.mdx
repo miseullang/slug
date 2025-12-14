@@ -1,0 +1,349 @@
+---
+title: "프론트는 왜 Enum 대신 as const를 쓸까"
+date: "2025-10-14"
+tags:
+  - TypeScript
+  - numeric enum
+summary: "TypeScript Enum의 문제점을 설명하고, as const 객체가 더 나은 대안인 이유를 비교 분석합니다."
+---
+
+### Enum 타입이란?
+
+Enum이란 관련된 값들의 집합에 이름을 붙여 구분하기 쉽게 만든 자료형이다.
+
+예를 들어 어드민 시스템을 관리한다면 모든 권한을 가지고 있는 ‘최고 관리자’, 실제로 시스템 전반을 운영하는 ‘중간 관리자’, 시스템을 사용하는 ‘사용자’가 있을 것이다.
+
+JAVA와 같이 타입 시스템이 있는 언어에서는 이런 상황에서 값을 정의할 때 Enum을 사용하는데, TS에서는 `const assertion` 방식을 더 많이 사용해서, 그 이유에 대해 정리해봤다.
+
+- Enum (JAVA)
+
+```jsx
+// 정의할 때
+public enum UserType {
+    SUPER_ADMIN,
+    ADMIN,
+    USER
+}
+
+// 사용할 때
+UserType type = UserType.ADMIN;
+```
+
+### const assertion (as const 방식)
+
+const assertion 혹은 as const 방식이라고 칭하는 이 패턴은 말 그대로 선언할 값을 ‘상수로 단언하겠다’는 뜻이다.
+
+- as const (TS)
+
+```jsx
+const UserType = {
+  SuperAdmin: 'SUPER_ADMIN',
+  Admin: 'ADMIN',
+  User: 'USER'
+} as const;
+
+type UserType = typeof UserType[keyof typeof UserType];
+```
+
+조금 복잡해 보이지만 단계별로 뜯어보면
+
+```tsx
+const UserType = {
+	SuperAdmin: 'SUPER_ADMIN',
+  Admin: 'ADMIN',
+  User: 'USER'
+} as const;
+
+// 단계별로 뜯어보면:
+typeof UserType
+// → { readonly SuperAdmin: "SUPER_ADMIN"; readonly Admin: "ADMIN"; readonly User: "USER" }
+
+keyof typeof UserType
+// → "SUPER_ADMIN" | "Admin" | "User"
+
+typeof UserType[keyof typeof UserType]
+// → "SUPER_ADMIN" | "ADMIN" | "USER"
+```
+
+C, Java, Swift, Go 등 대부분의 언어에서 열거형 타입을 선언할 때 enum을 사용한다.
+
+그렇다면 범용적으로도, 의미론적으로도 enum을 쓰는 게 좋을 것 같은데, 왜 타입스크립트는 const assertion 방식을 권장하는 걸까?
+
+## 1. TypeScript의 Numeric Enum
+
+---
+
+Enum은 객체 내에 선언하는 값에 따라 Numeric Enum과 String Enum으로 나뉘는데, Numeric Enum을 중심으로 살펴보겠다.
+
+타입스크립트에서 다음과 같이 방향에 대한 Enum을 선언하면 기본적으로 숫자값을 가진다.
+
+### **Numeric Enum**
+
+```tsx
+enum Direction {
+  Up, // 0
+  Down, // 1
+  Left, // 2
+  Right, // 3
+}
+```
+
+### 컴파일 후
+
+```jsx
+// 컴파일 후 JavaScript
+var Direction;
+(function (Direction) {
+  Direction[(Direction["Up"] = 0)] = "Up";
+  Direction[(Direction["Down"] = 1)] = "Down";
+  Direction[(Direction["Left"] = 2)] = "Left";
+  Direction[(Direction["Right"] = 3)] = "Right";
+})(Direction || (Direction = {}));
+```
+
+### 생성되는 객체
+
+```jsx
+{
+  0: "Up",
+  1: "Down",
+  2: "Left",
+  3: "Right",
+  Up: 0,
+  Down: 1,
+  Left: 2,
+  Right: 3
+}
+```
+
+따라서 Numeric Enum으로 생성한 이 객체는 이름("Up")으로 숫자(0)를 찾을 수도 있고, 숫자(0)로 이름("Up")을 찾을 수 있는 ‘양방향 매핑’이 이루어진다.
+
+### 왜 이렇게 만들었을까? 🧐
+
+TypeScript는 초기에 “enum 값을 문자열 대신 숫자로 관리하되, 디버깅할 때 이름도 알아내고 싶다”는 목적이 있었기 때문에 Direction[0]처럼 접근했을 때 "Up"이 나오도록 설계한 것이다.
+
+```
+Direction.Up        // 0
+Direction[0]        // "Up"
+```
+
+그러나 이 방식이 바로 거대한 스노우볼을 불러오는데…☃️
+
+### TypeScript Enum의 문제점
+
+**1. 열거시 혼란이 생김**
+
+```tsx
+for (const key in Direction) {
+  console.log(key);
+}
+
+// 출력
+0;
+1;
+2;
+3;
+Up;
+Down;
+Left;
+Right;
+```
+
+비단 for문 뿐만이 아니라 Object.keys(), Object.values()같은 메서드를 사용하면
+
+```tsx
+enum Direction {
+  Up, // 0
+  Down, // 1
+}
+
+// Numeric enum은 양방향 매핑을 생성
+Direction[0] === "Up"; // true
+Direction["Up"] === 0; // true
+
+// Object.entries()로 모든 것을 가져오면
+Object.entries(Direction);
+// 결과: [["0", "Up"], ["1", "Down"], ["Up", 0], ["Down", 1]]
+```
+
+짜잔! 이렇게 이상한 값을 얻을 수가 있답니다~!
+
+**2. 타입 안전성 부족**
+
+그뿐만 아니라 JS의 타입 안정성 부족을 보충하기 위해 쓰는 라이브러리가 이렇게 불안정한 타입을 제공한다는 점도 문제다.
+
+아까 설명한 것처럼 numeric enum으로 생성한 객체는 다음과 같이 컴파일 되는데,
+
+```jsx
+{
+  0: "Up",
+  1: "Down",
+  2: "Left",
+  3: "Right",
+  Up: 0,
+  Down: 1,
+  Left: 2,
+  Right: 3
+}
+```
+
+값에 숫자 키와 문자열 키가 섞여있는 걸 볼 수 있다.
+
+이걸 타입스크립트의 타입 추론 시스템은 기가 막히게 any로 추론해주기 때문에 다음과 같은 결괏값을 얻을 수 있다.
+
+```tsx
+// Object.entries()는 any 타입 반환
+const entries = Object.entries(Status); // [string, any][]
+
+// 타입 정보 손실
+entries.forEach(([key, value]) => {
+  // key는 string, value는 any
+  // Status의 실제 타입 정보가 사라짐
+});
+```
+
+## **2. const enum의 등장**
+
+---
+
+const enum은 “컴파일 시 완전히 인라인(inline)”되는 컴파일러 최적화 enum이다.
+
+위에서 만들었던
+
+```
+const enum Direction {
+  Up,
+  Down,
+  Left,
+  Right,
+}
+```
+
+이 코드는 JS로 컴파일하면 이렇게 된다.
+
+```
+var move = 0 /* Direction.Up */;
+```
+
+즉, 런타임 객체 자체가 만들어지지 않는다.
+
+Direction이라는 이름도 JS 결과물에는 존재하지 않고, 따라서 reverse mapping도 전혀 생기지 않는다.
+
+하지만 const enum의 등장으로 모든 문제가 해결됐다면 const assential도 없었을 것이다.
+
+### **const enum의 주의할 점**
+
+- const enum은 트랜스파일된 결과물에 enum 객체가 존재하지 않기 때문에, 런타임에서 enum을 순회하거나 동적으로 접근할 수 없다
+- Object.values(Direction) 같은 코드는 컴파일조차 되지 않는다
+- 또한 isolatedModules (예: Babel, SWC, Vite 환경)에서는 const enum을 기본적으로 지원하지 않거나 제한적으로 동작하기도 한다 ➡️ 결국 못 쓴다는 뜻
+  (이때는 preserveConstEnums: true를 tsconfig.json에 설정해야 합니다.)
+
+## 3. const assertion 방식
+
+---
+
+const assertion 방식은 TypeScript 커뮤니티에서도 권장되는 방법으로, string enum보다 타입 안정성이 높고, 런타임 동작도 더 예측 가능한 방법이다.
+
+enum 대신 객체 리터럴 + as const를 사용하면 런타임에서는 단순 객체로 동작하고, 타입 수준에서는 리터럴 타입을 그대로 유지할 수 있다.
+
+예시와 함께 설명하자면
+
+```
+const Direction = {
+  Up: "UP",
+  Down: "DOWN",
+  Left: "LEFT",
+  Right: "RIGHT",
+} as const;
+```
+
+이렇게 정의하면 TypeScript는 내부적으로 이렇게 인식한다.
+
+```
+{
+  readonly Up: "UP";
+  readonly Down: "DOWN";
+  readonly Left: "LEFT";
+  readonly Right: "RIGHT";
+}
+```
+
+즉, 모든 프로퍼티가 readonly이며 값이 리터럴 타입으로 고정된다.
+
+### **타입을 추출하는 방법**
+
+이제 이 객체를 기반으로 enum처럼 타입을 정의할 수 있다.
+
+```
+type Direction = typeof Direction[keyof typeof Direction];
+```
+
+이렇게 하면 Direction 타입은 다음과 같아지는데,
+
+```
+type Direction = "UP" | "DOWN" | "LEFT" | "RIGHT";
+```
+
+enum Direction { Up = "UP", ... }와 동일한 타입 효과를 가진다.
+
+### **사용 예시**
+
+```
+const Direction = {
+  Up: "UP",
+  Down: "DOWN",
+  Left: "LEFT",
+  Right: "RIGHT",
+} as const;
+
+type Direction = typeof Direction[keyof typeof Direction];
+
+function move(dir: Direction) {
+  console.log(`Moving ${dir}`);
+}
+
+move(Direction.Up);    // ✅ OK
+move("DOWN");          // ✅ OK
+move("Something");     // ❌ Error: not assignable to type 'Direction'
+```
+
+런타임에서는 단순한 객체, 타입 시스템에서는 안전한 리터럴 유니언 타입으로 동작한다.
+
+## **enum, const enum과 비교**
+
+---
+
+| **항목**             | enum                          | const enum             | as const **객체**      |
+| -------------------- | ----------------------------- | ---------------------- | ---------------------- |
+| 런타임 객체          | 있음                          | 없음                   | 있음                   |
+| 역방향 매핑          | 있음 (numeric enum)           | 없음                   | 없음                   |
+| 코드 크기            | 큼                            | 작음                   | 작음                   |
+| 타입 안전성          | 보통                          | 좋음                   | 매우 좋음              |
+| 순회 가능            | 가능                          | 불가능                 | 가능                   |
+| import/export 호환성 | 완전                          | 제한적 (Babel 등 주의) | 완전                   |
+| 권장 시나리오        | 레거시 코드, 명확한 상수 집합 | 성능 최적화            | ✅ 현대적, 안전한 방법 |
+
+### **추가 팁) 값과 키 모두 타입으로 쓰고 싶다면**
+
+```
+const Status = {
+  Success: "success",
+  Error: "error",
+  Pending: "pending",
+} as const;
+
+type StatusKey = keyof typeof Status; // "Success" | "Error" | "Pending"
+type StatusValue = typeof Status[StatusKey]; // "success" | "error" | "pending"
+```
+
+즉, **키 타입**과 **값 타입**을 모두 안전하게 활용할 수 있습니다.
+
+---
+
+## **✅ 정리 요약**
+
+| **방법**      | **런타임 객체** | **타입 안정성** | **역방향 매핑**   | **순회 가능** | **추천도**       |
+| ------------- | --------------- | --------------- | ----------------- | ------------- | ---------------- |
+| enum          | ✅ 있음         | ⚙️ 보통         | ⚠️ 있음 (numeric) | ✅ 가능       | ❌ (옛날 방식)   |
+| const enum    | ❌ 없음         | ⚙️ 높음         | ❌ 없음           | ❌ 불가능     | ⚙️ 제한적        |
+| as const 객체 | ✅ 있음         | ✅ 최고         | ❌ 없음           | ✅ 가능       | 🌟 **최신 추천** |
