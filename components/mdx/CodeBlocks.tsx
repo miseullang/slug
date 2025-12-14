@@ -80,7 +80,7 @@ export function CodeBlock({
   };
 
   return (
-    <div className="overflow-hidden rounded-xl border border-foreground/10 bg-gray-950/80 shadow-lg my-4">
+    <div className="overflow-hidden rounded-xl border border-foreground/10 bg-gray-950/80 shadow-lg">
       <div className="flex items-center justify-between border-b border-foreground/10 px-4 py-2 text-xs uppercase tracking-wide">
         <span className={cn("font-semibold", colorClass)}>{lang}</span>
         <button
@@ -117,7 +117,7 @@ export function InlineCode({
     <code
       className={cn(
         isInline
-          ? "rounded-xs  px-1.5 py-0.5 text-sm font-mono code-ligatures bg-gray-800 text-gray-200"
+          ? "rounded-xs  px-1.5 py-0.5 text-sm font-mono code-ligatures text-gray-200 dark:bg-gray-800 dark:text-gray-200"
           : "font-mono code-ligatures text-gray-200",
         className
       )}
