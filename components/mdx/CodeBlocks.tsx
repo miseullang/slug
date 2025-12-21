@@ -80,7 +80,7 @@ export function CodeBlock({
   };
 
   return (
-    <div className="overflow-hidden rounded-xl border border-foreground/10 bg-gray-950/80 shadow-lg">
+    <div className="overflow-hidden my-2 rounded-xl border border-foreground/10 bg-gray-950/80">
       <div className="flex items-center justify-between border-b border-foreground/10 px-4 py-2 text-xs uppercase tracking-wide">
         <span className={cn("font-semibold", colorClass)}>{lang}</span>
         <button

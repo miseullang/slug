@@ -1,6 +1,7 @@
 // contentlayer.config.ts
 import { defineDocumentType, makeSource } from "contentlayer/source-files";
 import remarkGfm from "remark-gfm";
+import remarkBreaks from "remark-breaks";
 import rehypeSlug from "rehype-slug";
 import GithubSlugger from "github-slugger";
 import removeMarkdown from "remove-markdown";
@@ -74,10 +75,10 @@ var contentlayer_config_default = makeSource({
   documentTypes: [Post],
   mdx: {
     rehypePlugins: [rehypeSlug],
-    remarkPlugins: [remarkGfm, remarkArrowReplace]
+    remarkPlugins: [remarkGfm, remarkBreaks, remarkArrowReplace]
   }
 });
 export {
   contentlayer_config_default as default
 };
-//# sourceMappingURL=compiled-contentlayer-config-2IJYECW6.mjs.map
+//# sourceMappingURL=compiled-contentlayer-config-UIOUOMIR.mjs.map
