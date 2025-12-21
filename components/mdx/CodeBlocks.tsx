@@ -117,7 +117,7 @@ export function InlineCode({
     <code
       className={cn(
         isInline
-          ? "rounded-xs  px-1.5 py-0.5 text-sm font-mono code-ligatures text-gray-200 dark:bg-gray-800 dark:text-gray-200"
+          ? "px-1.5 py-0.5 text-sm font-mono code-ligatures text-foreground bg-foreground/10 rounded-sm"
           : "font-mono code-ligatures text-gray-200",
         className
       )}
