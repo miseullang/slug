@@ -2,6 +2,7 @@
 
 import React, { HTMLAttributes, useState } from "react";
 import { cn } from "@/lib/utils";
+import { toast } from "sonner";
 
 const languageColors: Record<string, string> = {
   ts: "text-sky-300",
@@ -73,9 +74,11 @@ export function CodeBlock({
     try {
       await navigator.clipboard.writeText(code);
       setCopied(true);
+      toast.success("코드가 복사되었습니다.");
       setTimeout(() => setCopied(false), 1200);
     } catch (error) {
       console.error("Copy failed", error);
+      toast.error("클립보드 복사에 실패했습니다.");
     }
   };
 
