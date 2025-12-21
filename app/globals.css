@@ -443,3 +443,17 @@ body {
     @apply font-bold text-2xl;
   }
 }
+
+/* Preserve author-written line breaks inside prose */
+article.prose :where(p, blockquote, li) {
+  white-space: pre-line;
+}
+
+article.prose p > a {
+  text-decoration: underline;
+  transition: opacity 0.25s ease-in-out;
+}
+
+article.prose p > a:hover {
+  opacity: 0.6;
+}

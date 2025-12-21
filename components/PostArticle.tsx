@@ -169,7 +169,7 @@ export function PostArticle({ post }: PostArticleProps) {
               {post.tags.map((tag) => (
                 <li
                   key={tag}
-                  className="rounded-full bg-lime-200 px-4 py-1 text-foreground/80"
+                  className="rounded-full bg-lime-200 px-4 py-1 text-gray-800/80"
                 >
                   {tag}
                 </li>
