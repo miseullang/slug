@@ -457,3 +457,7 @@ article.prose p > a {
 article.prose p > a:hover {
   opacity: 0.6;
 }
+
+article.prose pre code {
+  @apply text-gray-300;
+}

@@ -96,7 +96,7 @@ export function CodeBlock({
       </div>
       <pre
         className={cn(
-          "bg-gray-900/60 p-4 text-sm text-gray-100 shadow-inner overflow-x-auto",
+          "bg-gray-900/60 p-4 text-sm shadow-inner overflow-x-auto",
           className
         )}
         data-language={lang}
