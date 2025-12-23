@@ -21,13 +21,13 @@ export default function Home() {
     <div>
       <Header />
       <CosmicBackground />
-      <div className="main-gradient px-10 py-20 flex gap-10">
+      <div className=" pt-24 pb-20 flex gap-5 max-w-[1440px] max-[1439px]:px-10 mx-auto ">
         <aside className="flex flex-col gap-4 min-w-[180px] max-w-[240px]">
-          <h2 className="flex-shrink-0 text-2xl font-bold">카테고리</h2>
+          <h2 className="shrink-0 text-2xl font-bold">카테고리</h2>
           <Category />
         </aside>
-        <main>
-          <div className="w-full max-w-8xl flex flex-col gap-20">
+        <main className="w-full shrink-1">
+          <div className="w-full flex flex-col gap-20">
             <section className="flex flex-col gap-4">
               <h2 className="text-2xl font-bold">최근 게시글</h2>
               <div className="flex flex-wrap gap-4">

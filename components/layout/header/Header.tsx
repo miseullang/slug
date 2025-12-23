@@ -13,7 +13,7 @@ export default function Header() {
   const { isDarkMode, setTheme } = useThemeMode();
 
   return (
-    <header className="flex items-center justify-between p-5">
+    <header className="flex items-center justify-between px-5 py-2 fixed top-0 left-0 right-0 z-50 bg-white/2 dark:bg-background/2 backdrop-blur-sm">
       <nav
         className={`flex items-center gap-10 w-fit px-4 py-2 rounded-full transition-colors`}
       >

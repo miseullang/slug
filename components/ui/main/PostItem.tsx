@@ -43,15 +43,15 @@ export default function PostItem({ post }: PostItemProps) {
   return (
     <Link
       href={`/post/${post.slug}`}
-      className="w-[300px] flex flex-col gap-4 group"
+      className="w-[280px] min-[1440px]:basis-[calc((100%-48px)/4)] min-[1440px]:max-w-[calc((100%-48px)/4)] flex flex-col gap-4 group"
     >
-      <figure className="w-[300px] h-[200px] relative group-hover:translate-y-[-10px] transition-all duration-300">
+      <figure className="w-[280px] min-[1440px]:w-full h-[200px] relative group-hover:translate-y-[-10px] transition-all duration-300">
         <Image
           src={BG_IMAGE}
           alt={post.title}
           fill
           className="object-cover aspect-ratio-300/200 rounded-3xl"
-          sizes="300px"
+          sizes="280px"
         />
         <Tooltip>
           <TooltipTrigger

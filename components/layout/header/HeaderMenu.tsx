@@ -17,9 +17,9 @@ const menuItems = [
     label: "About",
   },
   {
-    href: "/posts",
+    href: "/logs",
     icon: NewspaperIcon,
-    label: "Posts",
+    label: "Logs",
   },
 ];
 

@@ -25,7 +25,7 @@ const UnorderedList = ({
 }: HTMLAttributes<HTMLUListElement>) => {
   return (
     <ul
-      className={cn("p-2 list-disc list-inside space-y-1", className)}
+      className={cn("p-2 list-disc list-inside", className)}
       {...props}
     />
   );
