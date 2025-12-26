@@ -7,7 +7,7 @@ import Image from "next/image";
 import LOGO_WHITE from "@assets/logo/logo_white.svg";
 import LOGO_BLACK from "@assets/logo/logo_black.svg";
 import { Toggle } from "@/components/ui/toggle";
-import { MoonIcon, SunIcon } from "@heroicons/react/24/solid";
+import { CommandLineIcon, EnvelopeIcon, MoonIcon, SunIcon } from "@heroicons/react/24/solid";
 import { useThemeMode } from "@/lib/useThemeMode";
 import Link from "next/link";
 
@@ -92,7 +92,9 @@ export default function Header() {
           "fixed inset-0 z-40 lg:hidden",
           "bg-white/95 backdrop-blur-sm dark:bg-background/95",
           "will-change-transform",
-          isMobileMenuOpen ? "pointer-events-auto mobile-menu-open" : "pointer-events-none",
+          isMobileMenuOpen
+            ? "pointer-events-auto mobile-menu-open"
+            : "pointer-events-none",
         ].join(" ")}
         style={{
           opacity: isMobileMenuOpen ? 1 : 0,
@@ -103,24 +105,62 @@ export default function Header() {
       >
         <nav
           aria-label="모바일 메뉴"
-          className="flex h-full flex-col items-center justify-center gap-10 px-6"
+          className="flex h-full flex-col items-center justify-center px-5 relative"
         >
           {menuItems.map((item, index) => (
             <Link
               key={item.href}
               href={item.href}
               onClick={() => setIsMobileMenuOpen(false)}
-              className="block text-4xl tracking-tight text-foreground transition-[opacity,transform] duration-300 ease-in-out"
+              className={[
+                "text-4xl py-10 border-b border-foreground/10 tracking-tight text-foreground/90 hover:text-foreground/60 flex w-full items-center gap-10 transition-[opacity,transform,color] duration-300 ease-in-out",
+                index === 0 ? "border-t border-foreground/10" : "",
+              ].join(" ")}
               style={{
                 opacity: isMobileMenuOpen ? 1 : 0,
-                transitionDelay: isMobileMenuOpen ? `${500 + index * 250}ms` : "0ms",
+                transitionDelay: isMobileMenuOpen
+                  ? `${500 + index * 250}ms`
+                  : "0ms",
                 transform: `translateX(${isMobileMenuOpen ? "0%" : "100%"})`,
-
               }}
             >
+              <span className="text-xl py-1 px-4 rounded-md bg-foreground/10 font-semibold tracking-tight text-inherit">
+                0{index + 1}
+              </span>
               {item.label}
             </Link>
           ))}
+
+          <footer className="flex m-4 items-center justify-center gap-2 absolute bottom-0 left-0 right-0">
+            <div className="w-full flex flex-wrap items-center justify-between gap-4 pb-10">
+              <div className="flex-1 min-w-[280px]">
+                <p className="text-base leading-7 tracking-wide text-foreground/80">
+                  copyright ©2025 All rights reserved by @miseullang
+                </p>
+              </div>
+
+              <nav className="flex gap-4">
+                <a
+                  href="https://github.com/miseullang"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-3 rounded-full border px-5 py-2 text-lg font-medium text-foreground transition-all hover:-translate-y-0.5 hover:bg-white/50"
+                >
+                  <CommandLineIcon className="h-5 w-5" />
+                  GitHub
+                </a>
+                <a
+                  href="mailto:miseullang@gmail.com"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-3 rounded-full border px-5 py-2 text-lg font-medium text-foreground transition-all hover:-translate-y-0.5 hover:bg-white/50"
+                >
+                  <EnvelopeIcon className="h-5 w-5" />
+                  Email
+                </a>
+              </nav>
+            </div>
+          </footer>
         </nav>
       </div>
     </>
