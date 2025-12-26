@@ -1,60 +1,101 @@
 ---
-title: "CSS로 프론트 최적화하기 - Containment API"
-date: "2025-11-15"
+title: "짧지만 거슬리던 렌더링 지연, in-flight Promise로 해결해보기"
+date: "2025-12-22"
 tags:
-  - CSS
-  - 최적화
-summary: "CSS Containment API를 통해 요소의 외부 영향 범위를 제한하여 렌더링 성능을 최적화하는 방법을 설명합니다."
+  - 프론트엔드
+  - 업무 일지
+summary: "테이블의 각 셀이 서로 다른 API 호출 깊이를 가지면서 발생한 미묘한 렌더링 타이밍 차이를, in-flight Promise(요청 중 캐시) 패턴으로 해결한 경험을 정리합니다."
 ---
 
-`contain` 속성은 CSS Containment API의 일부로, 브라우저에게 특정 요소가 외부에 미치는 영향을 제한한다고 알려주어 렌더링 성능을 최적화하는 속성이다.
-`contain: layout style paint;`는 세 가지 containment 유형을 조합한 것이다.
+최근에 데이터를 테이블 형태로 렌더링 해야하는 업무가 있었다.
+기존의 API를 가지고 빠르게 개발해야 했던 상황이라 불가피하게 API를 연쇄적으로 호출할 수 밖에 없었다.
+6개의 셀이 있는데 모두 API 호출 깊이가 다르다보니 시각적으로 렌더링 속도 차이가 느껴졌다. 스켈레톤을 보여주기에는 짧은 텀이지만, 시각적으로는 거슬리는 애매한 타이밍이라 렌더링 속도 자체를 개선할 수 있는 근본적인 방법을 찾고 싶었다.
+결과적으로 in-flight Promise(요청 중 캐시) 방식을 적용해서 격차를 해소해봤는데 그 과정을 소개하려고 한다.
+API 호출 흐름은 다음과 같다.
 
-## 각 값의 의미
+1. A 리스트 조회
+   1. 각 row별 A key로 B조회
+      1. B의 response로 (1), (2)번 셀 렌더링
+      2. B의 response의 C key로 C 호출
+      3. C의 D key로 D 조회 후 (3)번 셀 렌더링
+   2. 각 row의 E key로 E 조회 후 (4), (5) 렌더링
 
-**`layout`** - 레이아웃 격리
+## 첫 번째 시도
 
-- 해당 요소 내부의 레이아웃 변경이 외부 요소들에 영향을 주지 않음
-- 요소의 내부 콘텐츠가 변경되어도 부모나 형제 요소의 레이아웃 재계산이 발생하지 않음
+---
 
-**`style`** - 스타일 격리
+1번의 A 리스트로 불러온 response에서 다음 체이닝을 위한 2개의 key를 받기 때문에 해당 key를 각각 캐싱하고, 캐싱된 key가 없는 경우에만 API를 호출하도록 했다.
 
-- CSS 카운터나 인용부호 등이 해당 요소 경계를 넘나들지 않음
-- 상속되는 스타일 변경의 영향 범위를 제한
+이렇게 적용 후 API 호출을 했을 때, 예상보다 호출 빈도가 잦은 것을 발견했다.
 
-**`paint`** - 페인트 격리
+<Callout>
+**단순 캐싱의 호출 과정**
 
-- 요소의 자식들이 요소 경계 밖으로 렌더링되지 않음 (overflow: hidden과 유사)
-- 요소 내부의 페인트 변경이 외부 요소의 리페인트를 트리거하지 않음
+---
 
-## 성능상 이점
+t0: A 리스트 응답 도착
+→ row별 key 추출 완료
 
-```css
-.card-container {
-  contain: layout style paint;
-  /* 또는 간단히 */
-  contain: strict; /* layout + style + paint + size를 의미 */
-}
+t1: 셀 (1) 렌더 → fetchB
+→ cache에 없음 → API 요청 시작
+
+t1: 셀 (2) 렌더 → fetchB
+→ cache에 없음 (아직 응답 안 옴) → API 요청 시작 ❌ 중복
+
+t2: 첫 번째 B 응답 도착 → cache 저장
+t3: 두 번째 B 응답 도착 → cache 덮어씀
+
+</Callout>
+
+1번 호출에 대한 응답값을 가지고 a,b가 각각 체이닝과 렌더링을 하는 구조이지만, 각 row마다 같은 B / C / D / E key가 여러 셀에서 동시에 필요로 하기 때문에 단순히 캐시 존재 여부만으로 판단하면 중복 호출이 발생하게 된다.
+
+캐싱 전 중복 호출까지 완전히 막기 위해 in-flight Promise 캐시(요청 중 캐시)를 추가했다.
+
+## 보완
+
+---
+
+자바스크립트의 fetch는 Promise 객체를 반환한다.
+
+Promise 객체는 외부에 데이터를 요청하고 받는 시간동안 다음 작업을 처리할 수 있도록 하는 비동기 객체이다.
+
+실제로는 값을 가지고 있지 않아도 마치 값이 있는 것처럼 사용할 수 있기 때문에 이 점을 이용해서 요청 중인 API 중복 호출하지 않도록 막아줄 수 있다.
+
+### 보완된 흐름
+
+1. 요청 발생
+2. 캐시에 있으면 캐시 반환
+3. 캐시에 없으면 inflight 확인 → 있으면 그 Promise 반환
+4. 없으면 새 요청 생성, inflight에 등록
+5. 응답 오면 캐시에 저장, inflight에서 제거
+
+### 최종 적용한 코드
+
+```tsx
+const cache = new Map<string, Data>();
+const pending = new Map<string, Promise<Data>>();
+
+export const fetchData = async (key: string, signal?: AbortSignal) => {
+  const cached = cache.get(key);
+  if (cached) return cached;
+
+  const inflight = pending.get(key);
+  if (inflight) return inflight;
+
+  const request = (async () => {
+    const res = await api.get(`/endpoint/${key}`, { signal });
+    const data = res.data;
+    cache.set(key, data);
+    return data;
+  })();
+
+  pending.set(key, request);
+  try {
+    return await request;
+  } finally {
+    pending.delete(key);
+  }
+};
 ```
 
-이렇게 설정하면 브라우저가 더 효율적으로 렌더링 최적화를 수행할 수 있고, 동적 컨텐츠, 특히 스크롤 성능이나 대량의 DOM 조작 시 유용하다.
-
-## 사용 예시
-
-```css
-.dynamic-widget {
-  contain: layout style paint;
-  /* 이 위젯 내부의 변경사항이 페이지 전체에 영향을 주지 않음 */
-}
-
-.infinite-scroll-item {
-  contain: layout paint;
-  /* 스크롤 성능 최적화에 유용 */
-}
-```
-
-주로 독립적인 컴포넌트나 위젯, 무한 스크롤 아이템 등에 사용하여 전체 페이지 성능을 향상시키는 데 활용된다.
-
-## 참고 자료
-
-https://developer.mozilla.org/ko/docs/Web/CSS/CSS_containment
+이렇게 중복 요청까지 방지한 후, 테이블의 모든 셀이 비슷한 시간 내에 렌더링되는 것을 확인할 수 있었고, 개발자 도구로 확인했을 때 API 중복 요청이 사라진 것도 확인할 수 있었다.
