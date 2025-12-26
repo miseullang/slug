@@ -37,7 +37,7 @@ const ListItem = ({ className, ...props }: HTMLAttributes<HTMLLIElement>) => (
 
 const Hr = ({ className, ...props }: HTMLAttributes<HTMLHRElement>) => (
   <hr
-    className={cn("mt-4 mb-2 border-t border-foreground/10", className)}
+    className={cn("mt-4 mb-2 border-t border-gray-300 dark:border-white/40", className)}
     {...props}
   />
 );
