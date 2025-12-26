@@ -5,7 +5,7 @@ import {
 } from "@heroicons/react/24/solid";
 import Link from "next/link";
 
-const menuItems = [
+export const menuItems = [
   {
     href: "/",
     icon: HomeIcon,
