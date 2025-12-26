@@ -43,7 +43,7 @@ export default function PostItem({ post }: PostItemProps) {
   return (
     <Link
       href={`/post/${post.slug}`}
-      className="w-[280px] min-[1440px]:basis-[calc((100%-48px)/4)] min-[1440px]:max-w-[calc((100%-48px)/4)] max-[962px]:w-[48%] max-[639px]:w-full flex flex-col gap-4 group"
+      className="min-[1440px]:basis-[calc((100%-48px)/4)] min-[1440px]:max-w-[calc((100%-48px)/4)] min-[1167px]:w-[calc((100%-32px)/3)] max-[1166px]:w-[calc((100%-32px)/3)] max-[962px]:w-[48%] max-[639px]:w-full flex flex-col gap-4 group"
     >
       <figure className="w-full h-[200px] max-[962px]:h-[250px] max-[800px]:h-[200px] max-[639px]:h-[250px] max-[450px]:h-[200px] relative group-hover:translate-y-[-10px] transition-all duration-300">
         <Image
