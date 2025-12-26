@@ -13,7 +13,7 @@ const categories = [
 
 export default function Category() {
   return (
-    <ul className="flex flex-col gap-1">
+    <ul className="flex flex-col gap-1 max-[1166px]:flex-row max-[1166px]:flex-wrap">
       {categories.map((name) => (
         <li key={name}>
           <Link

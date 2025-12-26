@@ -31,7 +31,7 @@ export function TableOfContents({ headings, activeId }: TableOfContentsProps) {
               <a
                 href={`#${heading.id}`}
                 className={cn(
-                  "block origin-left rounded-md px-2 py-1 transition-all duration-150 whitespace-normal break-words",
+                  "block max-w-[200px] origin-left rounded-sm px-2 py-1 transition-all duration-150 whitespace-normal wrap-break-word",
                   indent,
                   isActive
                     ? "scale-110 bg-foreground/5 text-foreground font-semibold"

@@ -157,60 +157,68 @@ export function PostArticle({ post }: PostArticleProps) {
   );
 
   return (
-    <div className="grid items-start gap-10 lg:grid-cols-[260px_minmax(0,1fr)] px-10">
-      <TableOfContents headings={headings} activeId={activeId} />
+    <div className="px-10 pt-24">
+      <div className="mx-auto flex flex-col items-start gap-10 lg:flex-row lg:items-start lg:justify-center">
+        <aside className="w-full max-w-[260px] lg:sticky lg:top-24 lg:self-start">
+          <TableOfContents headings={headings} activeId={activeId} />
+        </aside>
 
-      <article className="prose prose-neutral dark:prose-invert mx-auto max-w-4xl py-12">
-        <header className="mb-10 space-y-4">
-          <p className="text-sm text-foreground/70">{formattedDate}</p>
-          <h1 className="text-4xl font-bold tracking-tight">{post.title}</h1>
-          {post.tags?.length ? (
-            <ul className="flex flex-wrap gap-2 text-sm">
-              {post.tags.map((tag) => (
-                <li
-                  key={tag}
-                  className="rounded-full bg-lime-200 px-4 py-1 text-gray-800/80"
-                >
-                  {tag}
-                </li>
-              ))}
-            </ul>
-          ) : null}
-        </header>
-
-        {headings.length ? (
-          <div className="mb-8 lg:hidden">
-            <Callout variant="list">
-              <div className="mb-2 text-lg font-semibold text-foreground/80">
-                목차
-              </div>
-              <ul className="space-y-1 text-sm">
-                {headings.map((heading) => {
-                  const indent =
-                    heading.level === 3 ? "pl-3" : heading.level >= 4 ? "pl-5" : "";
-                  return (
-                    <li key={heading.id}>
-                      <a
-                        href={`#${heading.id}`}
-                        className={cn(
-                          "inline-block text-foreground/80 hover:text-foreground transition-colors",
-                          indent
-                        )}
-                      >
-                        {heading.title}
-                      </a>
-                    </li>
-                  );
-                })}
+        <article className="prose prose-neutral dark:prose-invert w-full max-w-4xl py-12 mr-20 lg:mr-0">
+          <header className="mb-10 space-y-4">
+            <p className="text-sm text-foreground/70">{formattedDate}</p>
+            <h1 className="text-4xl font-bold tracking-tight">{post.title}</h1>
+            {post.tags?.length ? (
+              <ul className="flex flex-wrap gap-2 text-sm">
+                {post.tags.map((tag) => (
+                  <li
+                    key={tag}
+                    className="rounded-full bg-lime-200 px-4 py-1 text-gray-800/80"
+                  >
+                    {tag}
+                  </li>
+                ))}
               </ul>
-            </Callout>
-          </div>
-        ) : null}
+            ) : null}
+          </header>
 
-        <div className="rounded-3xl">
-          <MDXContent code={post.body.code} />
-        </div>
-      </article>
+          {headings.length ? (
+            <div className="mb-8 lg:hidden">
+              <Callout variant="list">
+                <div className="mb-2 text-lg font-semibold text-foreground/80">
+                  목차
+                </div>
+                <ul className="space-y-1 text-sm">
+                  {headings.map((heading) => {
+                    const indent =
+                      heading.level === 3
+                        ? "pl-3"
+                        : heading.level >= 4
+                        ? "pl-5"
+                        : "";
+                    return (
+                      <li key={heading.id}>
+                        <a
+                          href={`#${heading.id}`}
+                          className={cn(
+                            "inline-block text-foreground/80 hover:text-foreground transition-colors",
+                            indent
+                          )}
+                        >
+                          {heading.title}
+                        </a>
+                      </li>
+                    );
+                  })}
+                </ul>
+              </Callout>
+            </div>
+          ) : null}
+
+          <div className="rounded-3xl">
+            <MDXContent code={post.body.code} />
+          </div>
+        </article>
+      </div>
     </div>
   );
 }
