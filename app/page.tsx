@@ -18,11 +18,11 @@ export default function Home() {
   const recommendedPosts = sortedPosts;
 
   return (
-    <div>
+    <div className="main-gradient">
       <Header />
       <CosmicBackground />
-      <div className=" pt-24 pb-20 flex gap-5 max-w-[1440px] max-[1439px]:px-10 mx-auto ">
-        <aside className="flex flex-col gap-4 min-w-[180px] max-w-[240px]">
+      <div className="pt-24 pb-20 flex gap-5 max-w-[1440px] max-[1439px]:px-10 mx-auto max-[1166px]:flex-col max-[1166px]:gap-10">
+        <aside className="flex flex-col gap-4 min-w-[180px] max-w-[240px] max-[1166px]:w-full max-[1166px]:max-w-full">
           <h2 className="shrink-0 text-2xl font-bold">카테고리</h2>
           <Category />
         </aside>
@@ -30,7 +30,7 @@ export default function Home() {
           <div className="w-full flex flex-col gap-20">
             <section className="flex flex-col gap-4">
               <h2 className="text-2xl font-bold">최근 게시글</h2>
-              <div className="flex flex-wrap gap-4">
+              <div className="flex flex-wrap gap-4 justify-between max-[1166px]:gap-10">
                 {recentPosts.length > 0 ? (
                   recentPosts.map((post) => (
                     <PostItem key={post.slug} post={post} />
@@ -42,7 +42,7 @@ export default function Home() {
             </section>
             <section className="flex flex-col gap-4">
               <h2 className="text-2xl font-bold">추천 게시글</h2>
-              <div className="flex flex-wrap gap-4">
+              <div className="flex flex-wrap gap-4 justify-between max-[1166px]:gap-8">
                 {recommendedPosts.length > 0 ? (
                   recommendedPosts.map((post) => (
                     <PostItem key={post.slug} post={post} />
