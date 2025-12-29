@@ -6,6 +6,7 @@ import MDXContent from "./mdx/MDXContent";
 import { TableOfContents } from "./mdx/TableOfContents";
 import { Callout } from "./mdx/Callout";
 import { cn } from "@/lib/utils";
+import Giscus from "@/components/layout/comments/Giscus";
 
 type PostArticleProps = {
   post: Post;
@@ -217,6 +218,7 @@ export function PostArticle({ post }: PostArticleProps) {
           <div className="rounded-3xl">
             <MDXContent code={post.body.code} />
           </div>
+          <Giscus />
         </article>
       </div>
     </div>
