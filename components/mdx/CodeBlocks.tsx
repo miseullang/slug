@@ -2,6 +2,7 @@
 
 import React, { HTMLAttributes, useState } from "react";
 import { cn } from "@/lib/utils";
+import { toast } from "sonner";
 
 const languageColors: Record<string, string> = {
   ts: "text-sky-300",
@@ -60,8 +61,8 @@ export function CodeBlock({
     typeof rawCode === "string"
       ? rawCode
       : Array.isArray(rawCode)
-        ? rawCode.join("")
-        : "";
+      ? rawCode.join("")
+      : "";
 
   const langMatch = codeProps?.className?.match(/language-([\w-]+)/);
   const lang = langMatch?.[1]?.toLowerCase() ?? "text";
@@ -73,27 +74,29 @@ export function CodeBlock({
     try {
       await navigator.clipboard.writeText(code);
       setCopied(true);
+      toast.success("코드가 복사되었습니다.");
       setTimeout(() => setCopied(false), 1200);
     } catch (error) {
       console.error("Copy failed", error);
+      toast.error("클립보드 복사에 실패했습니다.");
     }
   };
 
   return (
-    <div className="overflow-hidden rounded-xl border border-foreground/10 bg-gray-950/80 shadow-lg">
+    <div className="overflow-hidden my-2 rounded-xl border border-foreground/10 bg-gray-950/80">
       <div className="flex items-center justify-between border-b border-foreground/10 px-4 py-2 text-xs uppercase tracking-wide">
         <span className={cn("font-semibold", colorClass)}>{lang}</span>
         <button
           type="button"
           onClick={handleCopy}
-          className="rounded-lg border border-foreground/15 px-3 py-1 text-[11px] font-medium text-foreground/80 transition hover:border-foreground/25 hover:text-foreground"
+          className="rounded-lg border cursor-pointer border-white/15 px-3 py-1 text-[11px] font-medium text-white/80 transition hover:border-white/25 hover:text-white"
         >
           {copied ? "Copied" : "Copy"}
         </button>
       </div>
       <pre
         className={cn(
-          "bg-gray-900/60 p-4 text-sm text-gray-100 shadow-inner overflow-x-auto",
+          "bg-gray-900/60 p-4 text-sm shadow-inner overflow-x-auto",
           className
         )}
         data-language={lang}
@@ -117,7 +120,7 @@ export function InlineCode({
     <code
       className={cn(
         isInline
-          ? "rounded-xs bg-gray-100 px-1.5 py-0.5 text-sm font-mono code-ligatures text-gray-800 dark:bg-gray-800 dark:text-gray-200"
+          ? "px-1.5 py-0.5 text-sm font-mono code-ligatures text-foreground bg-foreground/10 rounded-sm"
           : "font-mono code-ligatures text-gray-200",
         className
       )}

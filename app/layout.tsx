@@ -3,9 +3,34 @@ import "./globals.css";
 import { Toaster } from "sonner";
 import { CheckBadgeIcon } from "@heroicons/react/24/solid";
 
+const siteUrl = "https://seulslug.vercel.app";
+
 export const metadata: Metadata = {
   title: "SLUG",
   description: "SLUG - seul log",
+  metadataBase: new URL(siteUrl),
+  openGraph: {
+    title: "SLUG",
+    description: "SLUG - seul log",
+    url: siteUrl,
+    siteName: "SLUG",
+    type: "website",
+    locale: "ko_KR",
+    images: [
+      {
+        url: "/assets/images/BG.jpg",
+        width: 1200,
+        height: 630,
+        alt: "SLUG",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "SLUG",
+    description: "SLUG - seul log",
+    images: ["/assets/images/BG.jpg"],
+  },
 };
 
 export default function RootLayout({
@@ -21,8 +46,7 @@ export default function RootLayout({
           position="top-center"
           toastOptions={{
             classNames: {
-              success:
-                "bg-gray-900 text-gray-100 shadow-lg",
+              success: "bg-gray-900 text-gray-100 shadow-lg",
               error: "bg-red-100 text-red-900 border border-red-200 shadow-lg",
             },
           }}

@@ -1,7 +1,7 @@
 "use client";
 /* eslint-disable react-hooks/static-components */
 
-import { HTMLAttributes, PropsWithChildren } from "react";
+import { ElementType, HTMLAttributes, PropsWithChildren } from "react";
 import { useMDXComponent } from "next-contentlayer/hooks";
 import { Callout } from "./Callout";
 import { CodeBlock, InlineCode } from "./CodeBlocks";
@@ -25,23 +25,30 @@ const UnorderedList = ({
 }: HTMLAttributes<HTMLUListElement>) => {
   return (
     <ul
-      className={cn("my-4 list-disc list-inside space-y-2", className)}
+      className={cn("p-2 list-disc list-inside", className)}
       {...props}
     />
   );
 };
 
-const ListItem = ({ className, ...props }: HTMLAttributes<HTMLLIElement>) => {
-  return <li className={cn("", className)} {...props} />;
-};
+const ListItem = ({ className, ...props }: HTMLAttributes<HTMLLIElement>) => (
+  <li className={cn("", className)} {...props} />
+);
 
-function createHeading(level: number) {
+const Hr = ({ className, ...props }: HTMLAttributes<HTMLHRElement>) => (
+  <hr
+    className={cn("mt-4 mb-2 border-t border-gray-300 dark:border-white/40", className)}
+    {...props}
+  />
+);
+
+function createHeading(level: 2 | 3 | 4) {
   const Component = ({
     className,
     children,
     ...props
   }: PropsWithChildren<HTMLAttributes<HTMLHeadingElement>>) => {
-    const Tag = `h${level}` as const;
+    const Tag = `h${level}` as ElementType;
 
     return (
       <Tag
@@ -49,10 +56,10 @@ function createHeading(level: number) {
         className={cn(
           "scroll-mt-32",
           level === 2
-            ? "mt-10 text-2xl font-bold tracking-tight"
+            ? "mt-10 text-2xl font-semibold tracking-tight"
             : level === 3
-              ? "mt-6 text-xl font-semibold"
-              : "mt-4 text-lg font-semibold",
+              ? "mt-6 text-xl font-medium"
+              : "mt-4 text-lg font-medium",
           className
         )}
       >
@@ -81,6 +88,7 @@ const components = {
   tr: TableRow,
   th: TableHeaderCell,
   td: TableCell,
+  hr: Hr,
   h2: H2,
   h3: H3,
   h4: H4,
