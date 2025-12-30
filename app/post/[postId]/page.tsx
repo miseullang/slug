@@ -1,7 +1,7 @@
 import { allPosts } from "contentlayer/generated";
 import { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { PostArticle } from "@/components/PostArticle";
+import { PostArticle } from "../components/PostArticle";
 import Header from "@/components/layout/header/Header";
 
 type PostPageProps = {

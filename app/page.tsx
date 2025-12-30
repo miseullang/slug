@@ -1,7 +1,7 @@
 import Footer from "../components/layout/Footer";
-import PostItem from "@/components/ui/main/PostItem";
+import PostItem from "@/components/home/PostItem";
 import Category from "@/components/layout/Category";
-import CosmicBackground from "@/components/home/CosmicBackground";
+import CosmicBackground from "@/components/layout/CosmicBackground";
 import { allPosts } from "contentlayer/generated";
 
 export default function Home() {
