@@ -104,7 +104,7 @@ const CareerAndEducation = () => {
       <Accordion
         type="single"
         collapsible
-        className="w-full"
+        className="w-full min-w-0"
         defaultValue={CAREER_ITEMS[0]?.id}
       >
         {CAREER_ITEMS.map((item) => (
@@ -178,26 +178,29 @@ const CareerAndEducation = () => {
                 })}
               </ul>
               {item.stack?.length ? (
-                <LogoLoop
-                  logos={item.stack.map(({ label, Icon }) => ({
-                    node: (
-                      <div
-                        className={`inline-flex items-center gap-2 ${stackItemClassName}`}
-                      >
-                        <Icon className={stackIconClassName} aria-hidden />
-                        <span>{label}</span>
-                      </div>
-                    ),
-                    ariaLabel: label,
-                  }))}
-                  speed={40}
-                  gap={12}
-                  logoHeight={28}
-                  fadeOut
-                  fadeOutColor="var(--background)"
-                  pauseOnHover
-                  ariaLabel={`${item.company} 기술 스택`}
-                />
+                <div className="max-w-full overflow-hidden">
+                  <LogoLoop
+                    logos={item.stack.map(({ label, Icon }) => ({
+                      node: (
+                        <div
+                          className={`inline-flex items-center gap-2 ${stackItemClassName}`}
+                        >
+                          <Icon className={stackIconClassName} aria-hidden />
+                          <span>{label}</span>
+                        </div>
+                      ),
+                      ariaLabel: label,
+                    }))}
+                    speed={40}
+                    gap={12}
+                    logoHeight={28}
+                    fadeOut
+                    fadeOutColor="var(--background)"
+                    pauseOnHover
+                    ariaLabel={`${item.company} 기술 스택`}
+                    className="max-w-full"
+                  />
+                </div>
               ) : null}
             </AccordionContent>
           </AccordionItem>
