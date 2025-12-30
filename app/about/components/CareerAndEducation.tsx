@@ -13,8 +13,9 @@ import PROGRAMMERS_LOGO from "@assets/logo/programmers.webp";
 const CAREER_ITEMS = [
   {
     id: "item-1",
-    role: "프론트엔드 개발자",
+    role: "프론트엔드 개발자 · 시니어 케어 플랫폼 케어벨 BO 개발 및 유지보수",
     company: "@zeroweb",
+    badge: ["B2B", "B2C", "B2G"],
     period: "2025.05.07 ~ present",
     image: CAREBELL_LOGO,
     link: "https://carebell.kr",
@@ -48,6 +49,8 @@ const periodClassName = "text-sm text-foreground/60";
 const contentClassName = "flex flex-col gap-4 text-balance";
 const listClassName = "space-y-2 text-sm text-foreground/70";
 const linkClassName = "transition-colors hover:text-foreground";
+const badgeClassName =
+  "rounded-full border border-foreground/15 px-2 py-0.5 text-[10px] font-medium text-foreground/70";
 
 const CareerAndEducation = () => {
   return (
@@ -84,14 +87,24 @@ const CareerAndEducation = () => {
                   </Link>
                   <div className="flex flex-col">
                     <span className={titleClassName}>{item.role}</span>
-                    <Link
-                      href={item.link}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className={`${companyClassName} ${linkClassName}`}
-                    >
-                      {item.company}
-                    </Link>
+                    <div className="flex flex-wrap items-center gap-2">
+                      <Link
+                        href={item.link}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className={`${companyClassName} ${linkClassName}`}
+                      >
+                        {item.company}
+                      </Link>
+                      {item.badge?.map((badge) => (
+                        <span
+                          key={`${item.id}-${badge}`}
+                          className={badgeClassName}
+                        >
+                          {badge}
+                        </span>
+                      ))}
+                    </div>
                   </div>
                 </div>
                 <span className={periodClassName}>{item.period}</span>

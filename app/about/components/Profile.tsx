@@ -4,7 +4,7 @@ import PROFILE_IMAGE from "@assets/images/profile.jpeg";
 
 const Profile = () => {
   return (
-    <div className="flex gap-4">
+    <div className="flex gap-10">
       <div className="w-[150px] h-[150px] rounded-full overflow-hidden">
         <Image
           src={PROFILE_IMAGE}

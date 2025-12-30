@@ -1,6 +1,3 @@
-import Image from "next/image";
-import PROFILE_IMAGE from "@assets/images/profile.jpeg";
-import { CommandLineIcon, EnvelopeIcon } from "@heroicons/react/24/solid";
 import CareerAndEducation from "./components/CareerAndEducation";
 import Achievements from "./components/Achievements";
 import Profile from "./components/Profile";
