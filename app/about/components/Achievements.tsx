@@ -11,7 +11,8 @@ const Achievements = () => {
         {ACHIEVEMENTS.map((item) => (
           <Link
             key={item.id}
-            href={`/about/achieve/${item.id}?mode=center`}
+            href={`/about?modal=achieve&id=${item.id}`}
+            scroll={false}
             className="block"
             aria-label={`${item.event} 상세 보기`}
           >

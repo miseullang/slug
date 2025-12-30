@@ -71,6 +71,12 @@ const AchievementDetail = ({
       <p>
         Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quos.
         Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam,
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam,
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam,
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam,
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam,
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam,
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam,
         quos.Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam,
         quos.Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam,
         quos.Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam,
