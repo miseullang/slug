@@ -1,6 +1,9 @@
 import Image from "next/image";
 import BG_IMAGE from "@assets/images/BG.jpg";
 import { SectionHeader } from "@/components/ui/section-header";
+import DX_DIVE_IMAGE from "@assets/images/dive2025.png";
+import SW_COMPETITION_IMAGE from "@assets/images/opensource2024.jpg";
+import DEV_COURSE_IMAGE from "@assets/images/devcourse.png";
 
 const ACHIEVEMENTS = [
   {
@@ -9,6 +12,8 @@ const ACHIEVEMENTS = [
     event: "DX DIVE 2025",
     award: "대상(부산광역시장상)",
     host: "부산광역시",
+    link: "https://www.busan.com/view/busan/view.php?code=2025082714083007691",
+    image: DX_DIVE_IMAGE,
   },
   {
     id: 2,
@@ -16,6 +21,8 @@ const ACHIEVEMENTS = [
     event: "공개 SW개발자대회",
     award: "SW협회장상(장려상)",
     host: "과학기술정보통신부",
+    link: "https://www.kossa.kr/materials/2024/ossp/ebook/index.html",
+    image: SW_COMPETITION_IMAGE,
   },
   {
     id: 3,
@@ -23,6 +30,8 @@ const ACHIEVEMENTS = [
     event: "프로그래머스 데브코스 파이널",
     award: "인기상, 우수상",
     host: "(주)그렙",
+    link: "https://programmers.co.kr/competitions/223/final",
+    image: DEV_COURSE_IMAGE,
   },
 ];
 
@@ -38,11 +47,11 @@ const Achievements = () => {
           >
             <div className="relative aspect-[16/9] overflow-hidden rounded-t-2xl">
               <Image
-                src={BG_IMAGE}
+                src={item.image ?? BG_IMAGE}
                 alt={`${item.event} 이미지`}
                 fill
                 sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                className="object-cover hover:scale-110 transition-all duration-300"
+                className="object-cover object-top hover:scale-110 transition-all duration-300"
               />
             </div>
             <div className="space-y-3 p-4">

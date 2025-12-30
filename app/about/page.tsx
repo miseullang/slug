@@ -23,6 +23,19 @@ const AboutPage = () => {
       <Profile />
       <Achievements />
       <CareerAndEducation />
+      <section className="rounded-2xl border border-foreground/10 bg-background p-2">
+        <div
+          className="relative w-full overflow-hidden rounded-xl bg-foreground/5"
+          style={{ paddingBottom: "calc(56.25% + 56px)" }}
+        >
+          <iframe
+            title="Figma Portfolio"
+            src="https://www.figma.com/embed?embed_host=notion&url=https://www.figma.com/proto/XwoucC5hgcOcnwRNB4U2In/%EA%B6%8C%EC%9C%A4%EC%8A%AC_PPT-%EC%88%98%EC%A0%95%EC%A4%91-?node-id=102-1014&scaling=scale-down"
+            className="absolute inset-0 h-full w-full border-0"
+            allowFullScreen
+          />
+        </div>
+      </section>
       <ul className="flex gap-2">
         {TAGS.map((tag) => (
           <li
@@ -33,6 +46,7 @@ const AboutPage = () => {
           </li>
         ))}
       </ul>
+      
     </div>
   );
 };
