@@ -1,6 +1,7 @@
-import Image from "next/image";
 import Link from "next/link";
 import type { AchievementItem } from "../../components/achievements-data";
+import { TrophyIcon } from "@heroicons/react/24/solid";
+import PosterPreview from "./PosterPreview";
 
 type AchievementDetailProps = {
   item: AchievementItem;
@@ -15,6 +16,57 @@ const AchievementDetail = ({
   closeHref,
   showActions = false,
 }: AchievementDetailProps) => {
+  const metaRows = [
+    { label: "주최기관", value: item.host },
+    { label: "수상일자", value: item.date },
+    ...(item.link
+      ? [
+          {
+            label: "관련 링크",
+            value: (
+              <a
+                href={item.link}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex text-sm font-medium text-foreground/80 underline-offset-4 hover:underline"
+              >
+                부산일보 기사
+              </a>
+            ),
+          },
+        ]
+      : []),
+  ];
+
+  const projectRows = [
+    {
+      label: "깃허브 링크",
+      value: (
+        <a
+          href="https://github.com/Busan-Dream"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-flex text-sm font-medium text-foreground/80 underline-offset-4 hover:underline"
+        >
+          깃허브 링크
+        </a>
+      ),
+    },
+    {
+      label: "배포 링크",
+      value: (
+        <a
+          href="https://www.busan-dream.co.kr"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-flex text-sm font-medium text-foreground/80 underline-offset-4 hover:underline"
+        >
+          배포 링크
+        </a>
+      ),
+    },
+  ]
+
   return (
     <div className="relative flex flex-col gap-6">
       <header className="absolute top-0 left-0 w-full z-10 bg-background/50 backdrop-blur-sm">
@@ -39,56 +91,74 @@ const AchievementDetail = ({
           </div>
         ) : null}
       </header>
-      <div className="relative aspect-[16/9] w-full overflow-hidden rounded-2xl border border-foreground/10 bg-foreground/5">
-        <Image
+      <article className="flex justify-between gap-6">
+        <div className="space-y-3">
+          <div className="space-y-1">
+            <h1 className="text-4xl font-semibold">{item.event}</h1>
+            <p className="text-md text-foreground/70 inline-flex items-center gap-2">
+              <TrophyIcon className="size-4" />
+              {item.award}
+            </p>
+          </div>
+          
+          <div className="space-y-1.5">
+          {metaRows.map((row) => (
+            <div
+              key={row.label}
+              className="flex flex-wrap items-center gap-x-4 text-sm text-foreground/60"
+            >
+              <span className="bg-foreground/10 rounded-sm px-2 py-0.5 text-xs text-foreground/70">
+                {row.label}
+              </span>
+              <span>{row.value}</span>
+            </div>
+          ))}
+          <hr className="border-foreground/10" />
+          {projectRows.map((row) => (
+            <div
+              key={row.label}
+              className="flex flex-wrap items-center gap-x-4 text-sm text-foreground/60"
+            >
+              <span className="bg-foreground/10 rounded-sm px-2 py-0.5 text-xs text-foreground/70">
+                {row.label}
+              </span>
+              <span>{row.value}</span>
+            </div>
+          ))}
+          </div>
+        </div>
+        <PosterPreview
           src={item.image}
-          alt={`${item.event} 이미지`}
-          fill
-          sizes="(max-width: 768px) 100vw, 60vw"
-          className="object-cover object-top"
+          alt={`${item.event} 포스터 크게 보기`}
         />
-      </div>
-      <div className="space-y-3">
-        <div className="space-y-1">
-          <h1 className="text-lg font-semibold">{item.event}</h1>
-          <p className="text-sm text-foreground/70">{item.award}</p>
-        </div>
-        <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-xs text-foreground/60">
-          <span>{item.host}</span>
-          <span>{item.date}</span>
-        </div>
-        {item.link ? (
-          <a
-            href={item.link}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex text-sm font-medium text-foreground/80 underline-offset-4 hover:underline"
-          >
-            관련 링크 보기
-          </a>
-        ) : null}
-      </div>
+      </article>
+
       <p>
         Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quos.
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam,
-        quos.Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam,
-        quos.Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam,
-        quos.Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam,
-        quos.Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam,
-        quos.Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam,
-        quos.Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam,
-        quos.Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam,
-        quos.Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam,
-        quos.Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam,
-        quos.Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam,
-        quos.Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam,
-        quos.Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam,
-        quos.Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam,
-        quos.Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam,
-        quos.Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam,
-        quos.Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam,
-        quos.Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam,
-        quos.
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, Lorem
+        ipsum dolor sit amet consectetur adipisicing elit. Quisquam, Lorem ipsum
+        dolor sit amet consectetur adipisicing elit. Quisquam, Lorem ipsum dolor
+        sit amet consectetur adipisicing elit. Quisquam, Lorem ipsum dolor sit
+        amet consectetur adipisicing elit. Quisquam, Lorem ipsum dolor sit amet
+        consectetur adipisicing elit. Quisquam, Lorem ipsum dolor sit amet
+        consectetur adipisicing elit. Quisquam, quos.Lorem ipsum dolor sit amet
+        consectetur adipisicing elit. Quisquam, quos.Lorem ipsum dolor sit amet
+        consectetur adipisicing elit. Quisquam, quos.Lorem ipsum dolor sit amet
+        consectetur adipisicing elit. Quisquam, quos.Lorem ipsum dolor sit amet
+        consectetur adipisicing elit. Quisquam, quos.Lorem ipsum dolor sit amet
+        consectetur adipisicing elit. Quisquam, quos.Lorem ipsum dolor sit amet
+        consectetur adipisicing elit. Quisquam, quos.Lorem ipsum dolor sit amet
+        consectetur adipisicing elit. Quisquam, quos.Lorem ipsum dolor sit amet
+        consectetur adipisicing elit. Quisquam, quos.Lorem ipsum dolor sit amet
+        consectetur adipisicing elit. Quisquam, quos.Lorem ipsum dolor sit amet
+        consectetur adipisicing elit. Quisquam, quos.Lorem ipsum dolor sit amet
+        consectetur adipisicing elit. Quisquam, quos.Lorem ipsum dolor sit amet
+        consectetur adipisicing elit. Quisquam, quos.Lorem ipsum dolor sit amet
+        consectetur adipisicing elit. Quisquam, quos.Lorem ipsum dolor sit amet
+        consectetur adipisicing elit. Quisquam, quos.Lorem ipsum dolor sit amet
+        consectetur adipisicing elit. Quisquam, quos.Lorem ipsum dolor sit amet
+        consectetur adipisicing elit. Quisquam, quos.Lorem ipsum dolor sit amet
+        consectetur adipisicing elit. Quisquam, quos.
       </p>
     </div>
   );
