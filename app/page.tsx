@@ -1,8 +1,7 @@
-import Header from "../components/layout/header/Header";
 import Footer from "../components/layout/Footer";
-import PostItem from "@/components/ui/main/PostItem";
+import PostItem from "@/components/home/PostItem";
 import Category from "@/components/layout/Category";
-import CosmicBackground from "@/components/home/CosmicBackground";
+import CosmicBackground from "@/components/layout/CosmicBackground";
 import { allPosts } from "contentlayer/generated";
 
 export default function Home() {
@@ -19,9 +18,8 @@ export default function Home() {
 
   return (
     <div className="main-gradient">
-      <Header />
       <CosmicBackground />
-      <div className="pt-24 pb-20 flex gap-5 max-w-[1440px] max-[1439px]:px-10 mx-auto max-[1166px]:flex-col max-[1166px]:gap-10">
+      <div className="pt-24 pb-20 flex gap-5 max-w-[1440px] max-[1439px]:px-10 mx-auto max-[1166px]:flex-col max-[1166px]:gap-10 max-lg:px-4">
         <aside className="flex flex-col gap-4 min-w-[180px] max-w-[240px] max-[1166px]:w-full max-[1166px]:max-w-full">
           <h2 className="shrink-0 text-2xl font-bold">카테고리</h2>
           <Category />
