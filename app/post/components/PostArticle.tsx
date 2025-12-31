@@ -2,9 +2,9 @@
 
 import { useEffect, useMemo, useState } from "react";
 import { Post } from "contentlayer/generated";
-import MDXContent from "./mdx/MDXContent";
-import { TableOfContents } from "./mdx/TableOfContents";
-import { Callout } from "./mdx/Callout";
+import MDXContent from "@/components/mdx/MDXContent";
+import { TableOfContents } from "@/components/mdx/TableOfContents";
+import { Callout } from "@/components/mdx/Callout";
 import { cn } from "@/lib/utils";
 import Giscus from "@/components/layout/comments/Giscus";
 
@@ -224,3 +224,4 @@ export function PostArticle({ post }: PostArticleProps) {
     </div>
   );
 }
+

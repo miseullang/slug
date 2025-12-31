@@ -1,8 +1,7 @@
 import { allPosts } from "contentlayer/generated";
 import { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { PostArticle } from "@/components/PostArticle";
-import Header from "@/components/layout/header/Header";
+import { PostArticle } from "../components/PostArticle";
 
 type PostPageProps = {
   params: Promise<{ postId: string }>;
@@ -57,10 +56,5 @@ export default async function PostPage({ params }: PostPageProps) {
     notFound();
   }
 
-  return (
-    <>
-      <Header />
-      <PostArticle post={post} />
-    </>
-  );
+  return <PostArticle post={post} />;
 }

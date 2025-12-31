@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import { Toaster } from "sonner";
 import { CheckBadgeIcon } from "@heroicons/react/24/solid";
+import Header from "@/components/layout/header/Header";
 
 const siteUrl = "https://seulslug.vercel.app";
 
@@ -41,6 +42,7 @@ export default function RootLayout({
   return (
     <html lang="ko" className="w-full h-full overflow-hidden">
       <body className="w-full h-screen overflow-auto">
+        <Header />
         {children}
         <Toaster
           position="top-center"
