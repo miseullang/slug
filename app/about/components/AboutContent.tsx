@@ -36,7 +36,7 @@ const AboutContent = () => {
           />
         </div>
       </section>
-      <ul className="flex gap-2">
+      {/* <ul className="flex gap-2">
         {TAGS.map((tag) => (
           <li
             key={tag.id}
@@ -45,7 +45,7 @@ const AboutContent = () => {
             {tag.name}
           </li>
         ))}
-      </ul>
+      </ul> */}
     </div>
   );
 };
