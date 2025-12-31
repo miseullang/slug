@@ -4,8 +4,8 @@ import { ACHIEVEMENTS } from "../../components/achievements-data";
 import AboutContent from "../../components/AboutContent";
 
 type AchievementPageProps = {
-  params: { id: string } | Promise<{ id: string }>;
-  searchParams?: { mode?: string } | Promise<{ mode?: string }>;
+  params: Promise<{ id: string }>;
+  searchParams?: Promise<{ mode?: string }>;
 };
 
 const AchievementPage = async ({
@@ -13,16 +13,12 @@ const AchievementPage = async ({
   searchParams,
 }: AchievementPageProps) => {
   const resolvedParams = await params;
-  const resolvedSearchParams = searchParams
-    ? await searchParams
-    : undefined;
+  const resolvedSearchParams = searchParams ? await searchParams : undefined;
   const normalizedId = resolvedParams?.id?.split("?")[0];
   if (!normalizedId) {
     notFound();
   }
-  const item = ACHIEVEMENTS.find(
-    (entry) => String(entry.id) === normalizedId
-  );
+  const item = ACHIEVEMENTS.find((entry) => String(entry.id) === normalizedId);
 
   if (!item) {
     notFound();
