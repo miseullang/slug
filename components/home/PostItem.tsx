@@ -17,9 +17,10 @@ import { Post } from "contentlayer/generated";
 
 type PostItemProps = {
   post: Post;
+  commentCount?: number;
 };
 
-export default function PostItem({ post }: PostItemProps) {
+export default function PostItem({ post, commentCount = 0 }: PostItemProps) {
   const formattedDate = new Intl.DateTimeFormat("ko-KR", {
     year: "numeric",
     month: "long",
@@ -59,7 +60,7 @@ export default function PostItem({ post }: PostItemProps) {
            border-4 border-white dark:border-black bg-lime-300 px-3 py-1 text-sm font-semibold text-gray-700"
           >
             <ChatBubbleLeftEllipsisIcon className="w-4 h-4 inline-block mr-1" />
-            0
+            {commentCount}
           </TooltipTrigger>
           <TooltipContent>
             <p>댓글 수</p>

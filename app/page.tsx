@@ -1,10 +1,11 @@
 import Footer from "../components/layout/Footer";
-import PostItem from "@/components/home/PostItem";
 import Category from "@/components/layout/Category";
 import CosmicBackground from "@/components/layout/CosmicBackground";
 import { allPosts } from "contentlayer/generated";
+import PostSections from "@/components/home/PostSections";
+import { fetchDiscussionCommentCounts } from "@/lib/giscus";
 
-export default function Home() {
+export default async function Home() {
   // 날짜순으로 정렬 (최신순)
   const sortedPosts = [...allPosts].sort((a, b) => {
     return new Date(b.date).getTime() - new Date(a.date).getTime();
@@ -15,6 +16,10 @@ export default function Home() {
 
   // 추천 게시글 (현재는 최근 게시글과 동일하게 표시)
   const recommendedPosts = sortedPosts;
+  const merged = [...recentPosts, ...recommendedPosts];
+  const paths = Array.from(new Set(merged.map((post) => `/post/${post.slug}`)));
+  const commentCounts =
+    paths.length > 0 ? await fetchDiscussionCommentCounts(paths) : {};
 
   return (
     <div className="main-gradient">
@@ -25,32 +30,11 @@ export default function Home() {
           <Category />
         </aside>
         <main className="w-full shrink-1">
-          <div className="w-full flex flex-col gap-20">
-            <section className="flex flex-col gap-4">
-              <h2 className="text-2xl font-bold">최근 게시글</h2>
-              <div className="flex flex-wrap gap-4 justify-between max-[1166px]:justify-start">
-                {recentPosts.length > 0 ? (
-                  recentPosts.map((post) => (
-                    <PostItem key={post.slug} post={post} />
-                  ))
-                ) : (
-                  <p className="text-foreground/60">게시글이 없습니다.</p>
-                )}
-              </div>
-            </section>
-            <section className="flex flex-col gap-4">
-              <h2 className="text-2xl font-bold">추천 게시글</h2>
-              <div className="flex flex-wrap gap-4 justify-between max-[1166px]:justify-start">
-                {recommendedPosts.length > 0 ? (
-                  recommendedPosts.map((post) => (
-                    <PostItem key={post.slug} post={post} />
-                  ))
-                ) : (
-                  <p className="text-foreground/60">게시글이 없습니다.</p>
-                )}
-              </div>
-            </section>
-          </div>
+          <PostSections
+            recentPosts={recentPosts}
+            recommendedPosts={recommendedPosts}
+            commentCounts={commentCounts}
+          />
         </main>
       </div>
       <Footer />

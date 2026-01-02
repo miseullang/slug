@@ -218,10 +218,9 @@ export function PostArticle({ post }: PostArticleProps) {
           <div className="rounded-3xl">
             <MDXContent code={post.body.code} />
           </div>
-          <Giscus />
+          <Giscus term={`post/${post.slug}`} />
         </article>
       </div>
     </div>
   );
 }
-
