@@ -4,7 +4,11 @@ import { useEffect } from "react";
 import Script from "next/script";
 import { useThemeMode } from "@/lib/useThemeMode";
 
-export default function Giscus() {
+type GiscusProps = {
+  term: string;
+};
+
+export default function Giscus({ term }: GiscusProps) {
   const { isDarkMode } = useThemeMode();
   const theme = isDarkMode ? "dark_dimmed" : "light";
 
@@ -39,13 +43,15 @@ export default function Giscus() {
     <section className="mt-16 w-full">
       <div className="giscus" />
       <Script
+        key={term}
         src="https://giscus.app/client.js"
         strategy="lazyOnload"
         data-repo="miseullang/slug"
         data-repo-id="R_kgDOQIQN2g"
         data-category="Announcements"
         data-category-id="DIC_kwDOQIQN2s4C0Wfs"
-        data-mapping="pathname"
+        data-mapping="specific"
+        data-term={term}
         data-strict="0"
         data-reactions-enabled="1"
         data-emit-metadata="1"
