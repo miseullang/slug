@@ -3,8 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev --turbopack",
-    "build": "next build --turbopack",
+    "dev": "pnpm exec contentlayer dev & next dev --turbopack",
+    "build": "pnpm exec contentlayer build && next build --turbopack",
     "start": "next start",
     "lint": "eslint"
   },
