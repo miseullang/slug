@@ -12,7 +12,7 @@ const LogsPage = () => {
     { title: "새로운 시도", date: "2025.11.28" },
     { title: "회고: 가을", date: "2025.11.15" },
   ];
-  const booksPerShelf = 4;
+  const booksPerShelf = 8;
   const shelves = books.reduce<{ title: string; date: string }[][]>(
     (rows, book, index) => {
       const rowIndex = Math.floor(index / booksPerShelf);
