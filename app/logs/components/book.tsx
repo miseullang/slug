@@ -47,7 +47,7 @@ const bookCardShadowClassName =
 
 const Book = ({ title, date, image, tilt = "left", slug }: BookProps) => {
   const hasImage = Boolean(image);
-  const [year, month, day] = date.split(".");
+  const [year, month, day] = date?.split(".") ?? [];
   const monthLabels = [
     "Jan",
     "Feb",
@@ -64,7 +64,9 @@ const Book = ({ title, date, image, tilt = "left", slug }: BookProps) => {
   ];
   const monthIndex = Number(month);
   const monthLabel =
-    monthIndex >= 1 && monthIndex <= 12 ? monthLabels[monthIndex - 1] : month;
+    Number.isFinite(monthIndex) && monthIndex >= 1 && monthIndex <= 12
+      ? monthLabels[monthIndex - 1]
+      : month ?? "";
 
   const colorIndex =
     title.split("").reduce((acc, char) => acc + char.charCodeAt(0), 0) %
@@ -83,7 +85,7 @@ const Book = ({ title, date, image, tilt = "left", slug }: BookProps) => {
             className={`relative cursor-pointer w-[180px] ${bookCardHeightClassName} overflow-hidden rounded-2xl bg-white/60 transition-all duration-300 hover:scale-105 ${bookCardShadowClassName}`}
           >
             <Image
-              src={(image as StaticImageData) || BG_IMAGE}
+              src={image || BG_IMAGE}
               alt={title}
               fill
               className="object-cover"
@@ -97,7 +99,7 @@ const Book = ({ title, date, image, tilt = "left", slug }: BookProps) => {
               }}
             >
               <span className="block leading-tight">{date}</span>
-              <h3 className="text-sm! font-semibold leading-tight">{title}</h3>
+              <h3 className="text-sm font-semibold leading-tight">{title}</h3>
             </div>
           </div>
         </>
@@ -147,7 +149,7 @@ export const PlaceholderBook = ({
         </span>
         <div className="absolute bottom-0 w-full text-xs px-3 py-2 rounded-b-2xl bg-foreground/10 text-foreground/60">
           <span className="block leading-tight">soon...</span>
-          <h3 className="text-sm! font-semibold leading-tight">입고 준비중</h3>
+          <h3 className="text-sm font-semibold leading-tight">입고 준비중</h3>
         </div>
       </div>
     </div>

@@ -80,7 +80,7 @@ const LogsPage = () => {
 
             return (
               <Book
-                key={book.title}
+                key={book.slug}
                 title={book.title}
                 date={book.date}
                 slug={book.slug}

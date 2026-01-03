@@ -21,22 +21,21 @@ type LogDocument = {
 
 type NormalizedLog = LogDocument & { slug: string };
 
+const extractSlug = (log: LogDocument): string =>
+  log.slug ?? log._raw?.flattenedPath?.replace(/^logs\//, "") ?? "";
+
 const getLog = (logId: string): NormalizedLog | undefined => {
   const logs = (allDocuments as unknown as LogDocument[]).filter((doc) =>
     doc._raw?.flattenedPath?.startsWith("logs/")
   );
 
   const match = logs.find((log) => {
-    const slug =
-      log.slug ??
-      log._raw?.flattenedPath?.replace(/^logs\//, "") ??
-      "";
+    const slug = extractSlug(log);
     return slug === logId;
   });
 
   if (!match) return;
-  const slug =
-    match.slug ?? match._raw?.flattenedPath?.replace(/^logs\//, "") ?? "";
+  const slug = extractSlug(match);
   if (!slug) return;
   return { ...match, slug };
 };
