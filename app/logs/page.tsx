@@ -1,50 +1,102 @@
-import Book from "./components/book";
+import { allDocuments } from "contentlayer/generated";
+import Book, { PlaceholderBook } from "./components/book";
 import Bookshelf from "./components/bookshelf";
-import dive2025 from "@assets/images/dive2025.png";
-import opensource2024 from "@assets/images/opensource2024.jpg";
-import devcourse from "@assets/images/devcourse.png";
+import BG from "@/app/assets/images/BG.jpg";
+import devcourse from "@/app/assets/images/devcourse.png";
+import dive2025 from "@/app/assets/images/dive2025.png";
+import opensource2024 from "@/app/assets/images/opensource2024.jpg";
 import type { StaticImageData } from "next/image";
 
+const getDeterministicTilt = (seed: string) =>
+  seed.split("").reduce((acc, char) => acc + char.charCodeAt(0), 0) % 2 === 0
+    ? "left"
+    : "right";
+
+type LogDocument = {
+  slug?: string;
+  title: string;
+  date: string;
+  cover?: string;
+  _raw?: { flattenedPath?: string };
+};
+
+const coverMap: Record<string, StaticImageData> = {
+  bg: BG,
+  devcourse,
+  dive2025,
+  opensource2024,
+};
+
+const getCoverImage = (cover?: string) =>
+  cover && coverMap[cover] ? coverMap[cover] : undefined;
+
+const getLogSlug = (log: LogDocument) =>
+  log.slug ?? log._raw?.flattenedPath?.replace(/^logs\//, "") ?? log.title;
+
+const formatLogDate = (rawDate: string) => {
+  const parsed = new Date(rawDate);
+  if (Number.isNaN(parsed.getTime())) return rawDate;
+  const year = parsed.getFullYear();
+  const month = String(parsed.getMonth() + 1).padStart(2, "0");
+  const day = String(parsed.getDate()).padStart(2, "0");
+  return `${year}.${month}.${day}`;
+};
+
 const LogsPage = () => {
-  const books: { title: string; date: string; image?: StaticImageData }[] = [
-    { title: "겨울의 기록", date: "2026.01.02" },
-    { title: "개발 노트: 홈 개편", date: "2026.01.01", image: devcourse },
-    { title: "한 줄 회고", date: "2025.12.28", image: dive2025 },
-    { title: "리팩터링 메모", date: "2025.12.20" },
-    { title: "작은 개선 모음", date: "2025.12.12", image: opensource2024 },
-    { title: "디자인 스냅샷", date: "2025.12.05" },
-    { title: "새로운 시도", date: "2025.11.28" },
-    { title: "회고: 가을", date: "2025.11.15", image: dive2025 },
-  ];
+  const logs = (allDocuments as unknown as LogDocument[])
+    .filter((doc) => doc._raw?.flattenedPath?.startsWith("logs/"))
+    .map((log) => ({
+      title: log.title,
+      date: formatLogDate(log.date),
+      slug: getLogSlug(log),
+      cover: getCoverImage(log.cover),
+    }))
+    .sort((a, b) => b.date.localeCompare(a.date));
+
   const booksPerShelf = 8;
-  const shelves = books.reduce<
-    { title: string; date: string; image?: StaticImageData }[][]
-  >(
-    (rows, book, index) => {
-      const rowIndex = Math.floor(index / booksPerShelf);
-      if (!rows[rowIndex]) {
-        rows[rowIndex] = [];
-      }
-      rows[rowIndex].push(book);
-      return rows;
-    },
-    []
-  );
+  const shelves = logs.reduce<
+    { title: string; date: string; slug: string; cover?: string }[][]
+  >((rows, book, index) => {
+    const rowIndex = Math.floor(index / booksPerShelf);
+    if (!rows[rowIndex]) {
+      rows[rowIndex] = [];
+    }
+    rows[rowIndex].push(book);
+    return rows;
+  }, []);
 
   return (
     <main className="relative min-h-screen bg-linear-to-b from-transparent to-gray-50/50">
       {shelves.map((shelf, index) => (
         <Bookshelf key={`shelf-${index}`}>
-          {shelf.map((book) => (
-            <Book
-              key={book.title}
-              title={book.title}
-              date={book.date}
-              image={book.image}
-            />
-          ))}
+          {shelf.map((book, bookIndex) => {
+            const isFirst = bookIndex === 0;
+            const isLast = bookIndex === shelf.length - 1;
+            const tilt = isFirst
+              ? "right"
+              : isLast
+              ? "left"
+              : getDeterministicTilt(book.title);
+
+            return (
+              <Book
+                key={book.title}
+                title={book.title}
+                date={book.date}
+                slug={book.slug}
+                image={book.cover}
+                tilt={tilt}
+              />
+            );
+          })}
         </Bookshelf>
       ))}
+      <Bookshelf>
+        <PlaceholderBook />
+      </Bookshelf>
+      <Bookshelf>
+        <PlaceholderBook />
+      </Bookshelf>
     </main>
   );
 };
