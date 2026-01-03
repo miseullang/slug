@@ -49,6 +49,7 @@ export async function generateMetadata({
 
   const siteUrl = "https://seulslug.vercel.app";
   const logUrl = `${siteUrl}/logs/${logId}`;
+  const ogImageUrl = new URL("/assets/images/BG.jpg", siteUrl).toString();
 
   return {
     title: log.title,
@@ -62,7 +63,7 @@ export async function generateMetadata({
       locale: "ko_KR",
       images: [
         {
-          url: "/assets/images/BG.jpg",
+          url: ogImageUrl,
           width: 1200,
           height: 630,
           alt: log.title,
@@ -73,7 +74,7 @@ export async function generateMetadata({
       card: "summary_large_image",
       title: log.title,
       description: log.summary ?? log.title,
-      images: ["/assets/images/BG.jpg"],
+      images: [ogImageUrl],
     },
   };
 }
