@@ -29,6 +29,10 @@ const BOOK_COVER_COLOR = [
     textColor: "#FFF",
   },
   {
+    color: "#FAB900",
+    textColor: "#333",
+  },
+  {
     color: "rgb(231,139,128)",
     textColor: "#FFF",
   },
@@ -61,7 +65,7 @@ const Book = ({ title, date, image }: BookProps) => {
   const selectedColor = BOOK_COVER_COLOR[colorIndex];
 
   return (
-    <div className="group">
+    <div className="group flex items-end">
       {hasImage ? (
         <>
           <div className="relative cursor-pointer w-[180px] h-[240px] overflow-hidden rounded-2xl bg-white/60 transition-all duration-300 hover:rotate-[-5deg] shadow-[2px_2px_10px_rgba(0,0,0,0.05)] hover:shadow-[0px_0px_40px_rgba(69,85,81,0.3)]">
@@ -72,7 +76,16 @@ const Book = ({ title, date, image }: BookProps) => {
               className="object-cover"
               sizes="180px"
             />
-            <div className="absolute inset-x-0 bottom-0 h-16 bg-linear-to-t from-black/60 to-transparent" />
+            <div
+              className="absolute bottom-0 w-full text-xs px-3 py-2 rounded-b-2xl"
+              style={{
+                backgroundColor: selectedColor.color,
+                color: selectedColor.textColor,
+              }}
+            >
+              <span className="block leading-tight">{date}</span>
+              <h3 className="text-sm! font-semibold leading-tight">{title}</h3>
+            </div>
           </div>
         </>
       ) : (
