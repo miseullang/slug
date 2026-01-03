@@ -1,15 +1,26 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
-import { Post } from "contentlayer/generated";
 import MDXContent from "@/components/mdx/MDXContent";
 import { TableOfContents } from "@/components/mdx/TableOfContents";
 import { Callout } from "@/components/mdx/Callout";
 import { cn } from "@/lib/utils";
 import Giscus from "@/components/layout/comments/Giscus";
 
+type Article = {
+  title: string;
+  date: string;
+  tags?: string[];
+  summary?: string;
+  body: { code: string };
+  slug: string;
+  headings?: unknown;
+  giscusId?: string;
+};
+
 type PostArticleProps = {
-  post: Post;
+  post: Article;
+  commentTermPrefix?: string;
 };
 
 type Heading = {
@@ -32,7 +43,10 @@ const isHeading = (value: unknown): value is Heading => {
   );
 };
 
-export function PostArticle({ post }: PostArticleProps) {
+export function PostArticle({
+  post,
+  commentTermPrefix = "post",
+}: PostArticleProps) {
   const headings = useMemo<Heading[]>(() => {
     if (!Array.isArray(post.headings)) return [];
     return post.headings.filter(isHeading);
@@ -218,7 +232,7 @@ export function PostArticle({ post }: PostArticleProps) {
           <div className="rounded-3xl">
             <MDXContent code={post.body.code} />
           </div>
-          <Giscus term={`post/${post.slug}`} />
+          <Giscus term={`${commentTermPrefix}/${post.giscusId ?? post.slug}`} />
         </article>
       </div>
     </div>

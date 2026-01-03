@@ -19,7 +19,7 @@ const TAGS = [
 
 const AboutContent = () => {
   return (
-    <div className="pt-30 px-10 max-lg:px-4 space-y-10 max-w-[1440px] mx-auto flex flex-col gap-10">
+    <div className="py-30 px-10 max-lg:px-4 space-y-10 max-w-[1440px] mx-auto flex flex-col gap-10">
       <Profile />
       <Achievements />
       <CareerAndEducation />
