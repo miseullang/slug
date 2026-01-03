@@ -55,7 +55,7 @@ const LogsPage = () => {
 
   const booksPerShelf = 8;
   const shelves = logs.reduce<
-    { title: string; date: string; slug: string; cover?: string }[][]
+    { title: string; date: string; slug: string; cover?: StaticImageData }[][]
   >((rows, book, index) => {
     const rowIndex = Math.floor(index / booksPerShelf);
     if (!rows[rowIndex]) {
