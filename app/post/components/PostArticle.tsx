@@ -183,7 +183,7 @@ export function PostArticle({
             <p className="text-sm text-foreground/70">{formattedDate}</p>
             <h1 className="text-4xl font-bold tracking-tight">{post.title}</h1>
             {post.tags?.length ? (
-              <ul className="flex flex-wrap gap-2 text-sm">
+              <ul className="flex flex-wrap gap-2 text-sm list-none">
                 {post.tags.map((tag) => (
                   <li
                     key={tag}

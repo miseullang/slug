@@ -1,6 +1,5 @@
 import { defineDocumentType, makeSource } from "contentlayer/source-files";
 import remarkGfm from "remark-gfm";
-import remarkBreaks from "remark-breaks";
 import rehypeSlug from "rehype-slug";
 import GithubSlugger from "github-slugger";
 import removeMarkdown from "remove-markdown";
@@ -90,6 +89,6 @@ export default makeSource({
   documentTypes: [Post, Log],
   mdx: {
     rehypePlugins: [rehypeSlug],
-    remarkPlugins: [remarkGfm, remarkBreaks, remarkArrowReplace],
+    remarkPlugins: [remarkGfm, remarkArrowReplace],
   },
 });
