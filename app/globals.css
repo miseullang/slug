@@ -444,8 +444,8 @@ body {
   }
 }
 
-/* Preserve author-written line breaks inside prose */
-article.prose :where(p, blockquote, li) {
+/* Preserve author-written line breaks inside prose paragraphs only */
+article.prose :where(p, blockquote) {
   white-space: pre-line;
 }
 
@@ -461,6 +461,26 @@ article.prose p > a:hover {
 article.prose pre code {
   @apply text-gray-300;
 }
+
+article.prose :where(ol, ul) {
+  margin: 0;
+  padding-left: 1.25rem;
+}
+
+article.prose :where(ol, ul).not-prose {
+  padding-left: 0;
+}
+
+article.prose :where(ol ol, ul ul, ol ul, ul ol) {
+  margin-top: 0.25rem;
+  margin-bottom: 0.25rem;
+}
+
+article.prose :where(li) {
+  margin: 0.125rem 0;
+  line-height: 1.5;
+}
+
 
 /* 스크롤바 커스텀 */
 * {

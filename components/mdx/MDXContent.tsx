@@ -23,9 +23,16 @@ const UnorderedList = ({
   className,
   ...props
 }: HTMLAttributes<HTMLUListElement>) => {
+  return <ul className={cn("list-none m-0 pl-5", className)} {...props} />;
+};
+
+const OrderedList = ({
+  className,
+  ...props
+}: HTMLAttributes<HTMLOListElement>) => {
   return (
-    <ul
-      className={cn("p-2 list-disc list-inside", className)}
+    <ol
+      className={cn("list-decimal list-outside m-0 pl-5", className)}
       {...props}
     />
   );
@@ -81,6 +88,7 @@ const components = {
   pre: CodeBlock,
   code: InlineCode,
   ul: UnorderedList,
+  ol: OrderedList,
   li: ListItem,
   table: Table,
   thead: TableHead,
