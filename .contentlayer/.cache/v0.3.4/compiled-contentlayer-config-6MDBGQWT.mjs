@@ -1,34 +1,9 @@
 // contentlayer.config.ts
 import { defineDocumentType, makeSource } from "contentlayer/source-files";
 import remarkGfm from "remark-gfm";
-import remarkBreaks from "remark-breaks";
 import rehypeSlug from "rehype-slug";
 import GithubSlugger from "github-slugger";
 import removeMarkdown from "remove-markdown";
-
-// lib/remark-arrow-replace.ts
-var SKIP_TYPES = /* @__PURE__ */ new Set(["code", "inlineCode"]);
-function transform(node) {
-  if (!node)
-    return;
-  if (node.type && SKIP_TYPES.has(node.type))
-    return;
-  if (typeof node.value === "string") {
-    node.value = node.value.replace(/→|->/g, "\u2192").replace(/⇒|=>/g, "\u21D2");
-  }
-  if (Array.isArray(node.children)) {
-    for (const child of node.children) {
-      transform(child);
-    }
-  }
-}
-function remarkArrowReplace() {
-  return (tree) => {
-    transform(tree);
-  };
-}
-
-// contentlayer.config.ts
 function extractHeadings(raw) {
   const slugger = new GithubSlugger();
   slugger.reset();
@@ -57,7 +32,8 @@ var Post = defineDocumentType(() => ({
     title: { type: "string", required: true },
     date: { type: "date", required: true },
     tags: { type: "list", of: { type: "string" }, required: false },
-    summary: { type: "string", required: false }
+    summary: { type: "string", required: false },
+    giscusId: { type: "string", required: false }
   },
   computedFields: {
     slug: {
@@ -70,15 +46,38 @@ var Post = defineDocumentType(() => ({
     }
   }
 }));
+var Log = defineDocumentType(() => ({
+  name: "Log",
+  filePathPattern: `logs/**/*.mdx`,
+  contentType: "mdx",
+  fields: {
+    title: { type: "string", required: true },
+    date: { type: "date", required: true },
+    tags: { type: "list", of: { type: "string" }, required: false },
+    summary: { type: "string", required: false },
+    giscusId: { type: "string", required: false },
+    cover: { type: "string", required: false }
+  },
+  computedFields: {
+    slug: {
+      type: "string",
+      resolve: (log) => log._raw.flattenedPath.replace(/^logs\//, "")
+    },
+    headings: {
+      type: "json",
+      resolve: (log) => extractHeadings(log.body?.raw ?? "")
+    }
+  }
+}));
 var contentlayer_config_default = makeSource({
   contentDirPath: "content",
-  documentTypes: [Post],
+  documentTypes: [Post, Log],
   mdx: {
     rehypePlugins: [rehypeSlug],
-    remarkPlugins: [remarkGfm, remarkBreaks, remarkArrowReplace]
+    remarkPlugins: [remarkGfm]
   }
 });
 export {
   contentlayer_config_default as default
 };
-//# sourceMappingURL=compiled-contentlayer-config-UIOUOMIR.mjs.map
+//# sourceMappingURL=compiled-contentlayer-config-6MDBGQWT.mjs.map

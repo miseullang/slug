@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { Analytics } from "@vercel/analytics/next";
 import "./globals.css";
 import { Toaster } from "sonner";
 import { CheckBadgeIcon } from "@heroicons/react/24/solid";
@@ -44,6 +45,7 @@ export default function RootLayout({
       <body className="w-full h-screen overflow-auto">
         <Header />
         {children}
+        <Analytics />
         <Toaster
           position="top-center"
           toastOptions={{
