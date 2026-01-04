@@ -3,7 +3,6 @@ import remarkGfm from "remark-gfm";
 import rehypeSlug from "rehype-slug";
 import GithubSlugger from "github-slugger";
 import removeMarkdown from "remove-markdown";
-import { remarkArrowReplace } from "./lib/remark-arrow-replace";
 
 type Heading = {
   level: number;
@@ -89,6 +88,6 @@ export default makeSource({
   documentTypes: [Post, Log],
   mdx: {
     rehypePlugins: [rehypeSlug],
-    remarkPlugins: [remarkGfm, remarkArrowReplace],
+    remarkPlugins: [remarkGfm],
   },
 });
