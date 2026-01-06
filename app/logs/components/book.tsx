@@ -12,16 +12,20 @@ type BookProps = {
 
 const BOOK_COVER_COLOR = [
   {
-    color: "#BBF351",
-    textColor: "#333",
+    color: "#222",
+    textColor: "#FFF",
+  },
+  {
+    color: "rgb(231,139,128)",
+    textColor: "#FFF",
   },
   {
     color: "#FAB900",
     textColor: "#333",
   },
   {
-    color: "rgb(231,139,128)",
-    textColor: "#FFF",
+    color: "#BBF351",
+    textColor: "#333",
   },
   {
     color: "rgb(103,136,223)",
@@ -107,12 +111,12 @@ const Book = ({ title, date, image, tilt = "left", slug }: BookProps) => {
         <div
           className={`relative cursor-pointer mt-3 flex ${bookCardHeightClassName} min-w-[70px] flex-col items-center bg-white overflow-hidden rounded-2xl transition-all duration-300 ${tiltClassName} ${bookCardShadowClassName}`}
         >
-          <div className="flex flex-1 items-center justify-center overflow-hidden">
+          <div className="flex flex-1 items-center justify-center overflow-hidden w-full">
             <h3 className="[writing-mode:vertical-rl] text-center text-md font-semibold text-gray-900 line-clamp-2">
               {title}
             </h3>
           </div>
-          <div className="w-full text-xs px-2 py-1 rounded-b-2xl text-center bg-foreground/10 text-foreground/60">
+          <div className="w-full text-xs px-2 py-1 rounded-b-2xl text-center bg-lime-300/60 text-foreground/60">
             <span className="block leading-tight">{year}</span>
             <span className="block leading-tight">{monthLabel}</span>
             <span className="block leading-tight">{day}</span>
