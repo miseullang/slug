@@ -20,7 +20,7 @@ type PostItemProps = {
 };
 
 const DEFAULT_COVER_IMAGE = "/assets/images/BG.jpg";
-const isValidCover = (cover?: string) =>
+const isValidCover = (cover: unknown): cover is string =>
   typeof cover === "string" &&
   cover.length > 0 &&
   (cover.startsWith("/") || cover.startsWith("http"));
