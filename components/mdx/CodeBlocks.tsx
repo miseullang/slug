@@ -23,6 +23,19 @@ export function CodeBlock({
   className,
   ...props
 }: HTMLAttributes<HTMLPreElement>) {
+  const getTextContent = (node: React.ReactNode): string => {
+    if (typeof node === "string" || typeof node === "number") {
+      return String(node);
+    }
+    if (Array.isArray(node)) {
+      return node.map(getTextContent).join("");
+    }
+    if (React.isValidElement(node)) {
+      return getTextContent(node.props.children);
+    }
+    return "";
+  };
+
   const findCodeElement = (
     children: React.ReactNode
   ): React.ReactElement | null => {
@@ -53,19 +66,20 @@ export function CodeBlock({
 
   const codeElement = findCodeElement(children);
   const codeProps = codeElement?.props as
-    | { className?: string; children?: React.ReactNode }
+    | { className?: string; children?: React.ReactNode; style?: React.CSSProperties }
     | undefined;
 
   const rawCode = codeProps?.children;
-  const code =
-    typeof rawCode === "string"
-      ? rawCode
-      : Array.isArray(rawCode)
-      ? rawCode.join("")
-      : "";
+  const code = getTextContent(rawCode);
+  const hasTokens =
+    Array.isArray(rawCode) || (rawCode && React.isValidElement(rawCode));
 
   const langMatch = codeProps?.className?.match(/language-([\w-]+)/);
-  const lang = langMatch?.[1]?.toLowerCase() ?? "text";
+  const dataLanguage =
+    typeof (props as { "data-language"?: string })["data-language"] === "string"
+      ? (props as { "data-language"?: string })["data-language"]
+      : undefined;
+  const lang = (langMatch?.[1] ?? dataLanguage ?? "text").toLowerCase();
   const colorClass = languageColors[lang] ?? "text-slate-200";
   const [copied, setCopied] = useState(false);
 
@@ -102,8 +116,11 @@ export function CodeBlock({
         data-language={lang}
         {...props}
       >
-        <code className={cn("font-mono code-ligatures", codeProps?.className)}>
-          {code || children}
+        <code
+          className={cn("font-mono code-ligatures", codeProps?.className)}
+          style={codeProps?.style}
+        >
+          {hasTokens ? rawCode : code || children}
         </code>
       </pre>
     </div>

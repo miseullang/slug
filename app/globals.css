@@ -458,7 +458,7 @@ article.prose p > a:hover {
   opacity: 0.6;
 }
 
-article.prose pre code {
+article.prose pre:not(.shiki) code {
   @apply text-gray-300;
 }
 
@@ -479,6 +479,24 @@ article.prose :where(ol ol, ul ul, ol ul, ul ol) {
 article.prose :where(li) {
   margin: 0.125rem 0;
   line-height: 1.5;
+}
+
+article.prose pre.shiki {
+  background: transparent !important;
+  color: var(--shiki-color-text, #c9d1d9) !important;
+}
+
+article.prose pre.shiki code {
+  background: transparent !important;
+  color: inherit !important;
+}
+
+article.prose pre.shiki span[style*="--shiki-dark"] {
+  color: var(--shiki-dark) !important;
+}
+
+article.prose pre.shiki .highlighted {
+  @apply bg-white/5 px-4 -mx-4 inline-block;
 }
 
 

@@ -1,3 +1,4 @@
+// contentlayer.config.ts
 import { defineDocumentType, makeSource } from "contentlayer/source-files";
 import remarkGfm from "remark-gfm";
 import rehypeSlug from "rehype-slug";
@@ -5,27 +6,18 @@ import rehypeShiki from "@shikijs/rehype";
 import {
   transformerNotationDiff,
   transformerNotationFocus,
-  transformerNotationHighlight,
+  transformerNotationHighlight
 } from "@shikijs/transformers";
 import GithubSlugger from "github-slugger";
 import removeMarkdown from "remove-markdown";
-
-type Heading = {
-  level: number;
-  title: string;
-  id: string;
-};
-
-function extractHeadings(raw: string): Heading[] {
+function extractHeadings(raw) {
   const slugger = new GithubSlugger();
   slugger.reset();
-  const headings: Heading[] = [];
+  const headings = [];
   const headingRegex = /^(#{2,4})\s+(.+)$/gm;
-  const stripEmoji = (text: string) =>
-    text.replace(/\p{Extended_Pictographic}|\uFE0F/gu, "");
-  let match: RegExpExecArray | null;
-
-  while ((match = headingRegex.exec(raw))) {
+  const stripEmoji = (text) => text.replace(/\p{Extended_Pictographic}|\uFE0F/gu, "");
+  let match;
+  while (match = headingRegex.exec(raw)) {
     const hashes = match[1];
     const rawText = match[2].replace(/#+$/, "").trim();
     const cleanText = stripEmoji(removeMarkdown(rawText)).trim();
@@ -33,16 +25,12 @@ function extractHeadings(raw: string): Heading[] {
     headings.push({
       level: hashes.length,
       title: safeText,
-      id: safeText
-        ? slugger.slug(safeText)
-        : slugger.slug(`heading-${headings.length + 1}`),
+      id: safeText ? slugger.slug(safeText) : slugger.slug(`heading-${headings.length + 1}`)
     });
   }
-
   return headings;
 }
-
-const Post = defineDocumentType(() => ({
+var Post = defineDocumentType(() => ({
   name: "Post",
   filePathPattern: `posts/**/*.mdx`,
   contentType: "mdx",
@@ -51,21 +39,20 @@ const Post = defineDocumentType(() => ({
     date: { type: "date", required: true },
     tags: { type: "list", of: { type: "string" }, required: false },
     summary: { type: "string", required: false },
-    giscusId: { type: "string", required: false },
+    giscusId: { type: "string", required: false }
   },
   computedFields: {
     slug: {
       type: "string",
-      resolve: (post) => post._raw.flattenedPath.replace(/^posts\//, ""),
+      resolve: (post) => post._raw.flattenedPath.replace(/^posts\//, "")
     },
     headings: {
       type: "json",
-      resolve: (post) => extractHeadings(post.body?.raw ?? ""),
-    },
-  },
+      resolve: (post) => extractHeadings(post.body?.raw ?? "")
+    }
+  }
 }));
-
-const Log = defineDocumentType(() => ({
+var Log = defineDocumentType(() => ({
   name: "Log",
   filePathPattern: `logs/**/*.mdx`,
   contentType: "mdx",
@@ -75,21 +62,20 @@ const Log = defineDocumentType(() => ({
     tags: { type: "list", of: { type: "string" }, required: false },
     summary: { type: "string", required: false },
     giscusId: { type: "string", required: false },
-    cover: { type: "string", required: false },
+    cover: { type: "string", required: false }
   },
   computedFields: {
     slug: {
       type: "string",
-      resolve: (log) => log._raw.flattenedPath.replace(/^logs\//, ""),
+      resolve: (log) => log._raw.flattenedPath.replace(/^logs\//, "")
     },
     headings: {
       type: "json",
-      resolve: (log) => extractHeadings(log.body?.raw ?? ""),
-    },
-  },
+      resolve: (log) => extractHeadings(log.body?.raw ?? "")
+    }
+  }
 }));
-
-export default makeSource({
+var contentlayer_config_default = makeSource({
   contentDirPath: "content",
   documentTypes: [Post, Log],
   mdx: {
@@ -103,11 +89,15 @@ export default makeSource({
           transformers: [
             transformerNotationHighlight(),
             transformerNotationFocus(),
-            transformerNotationDiff(),
-          ],
-        },
-      ],
+            transformerNotationDiff()
+          ]
+        }
+      ]
     ],
-    remarkPlugins: [remarkGfm],
-  },
+    remarkPlugins: [remarkGfm]
+  }
 });
+export {
+  contentlayer_config_default as default
+};
+//# sourceMappingURL=compiled-contentlayer-config-CAOF45BG.mjs.map
