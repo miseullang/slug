@@ -12,10 +12,12 @@ import PROGRAMMERS_LOGO from "@assets/logo/programmers.webp";
 import LogoLoop from "components/ui/logo-loop";
 import {
   SiCssmodules,
+  SiI18Next,
   SiNextdotjs,
   SiReact,
   SiSocketdotio,
   SiTypescript,
+  SiVitest,
 } from "react-icons/si";
 
 const CAREER_ITEMS = [
@@ -31,6 +33,8 @@ const CAREER_ITEMS = [
       { label: "React Native", Icon: SiReact },
       { label: "Next.js", Icon: SiNextdotjs },
       { label: "Socket.IO", Icon: SiSocketdotio },
+      { label: "Vitest", Icon: SiVitest },
+      { label: "i18n", Icon: SiI18Next },
     ],
     period: "2025.05.07 ~ present",
     image: CAREBELL_LOGO,
@@ -42,6 +46,7 @@ const CAREER_ITEMS = [
         details: [
           "신규 기능: 시니어 케어 스케줄 관리를 Jira > Timeline과 유사한 형태로 관리할 수 있는 기능 개발",
           "신규 기능: 메인 페이지 대시보드 기능 개발",
+          "유지 보수: 테이블 관리 페이지 & 에디터 개발",
         ],
       },
       {
@@ -55,6 +60,7 @@ const CAREER_ITEMS = [
         title: "3. 파트너사 제휴 페이지 FE 파트 주도 개발",
         details: [
           "페이지 로딩 성능 최적화 및 렌더링 비용 감소 작업 (CLS 점수 0.27 -> 0.1)",
+          "i18n 번역 Key 관리를 위한 테스트 코드 작성 (vitest)"
         ],
       },
       {

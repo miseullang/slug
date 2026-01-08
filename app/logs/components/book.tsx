@@ -1,5 +1,4 @@
 import Image, { StaticImageData } from "next/image";
-import BG_IMAGE from "@assets/images/BG.jpg";
 import Link from "next/link";
 
 type BookProps = {
@@ -48,6 +47,7 @@ const BOOK_COVER_COLOR = [
 const bookCardHeightClassName = "h-[240px]";
 const bookCardShadowClassName =
   "shadow-[2px_2px_10px_rgba(0,0,0,0.05)] hover:shadow-[0px_0px_40px_rgba(69,85,81,0.3)]";
+const DEFAULT_COVER_IMAGE = "/assets/images/BG.jpg";
 
 const Book = ({ title, date, image, tilt = "left", slug }: BookProps) => {
   const hasImage = Boolean(image);
@@ -89,7 +89,7 @@ const Book = ({ title, date, image, tilt = "left", slug }: BookProps) => {
             className={`relative cursor-pointer w-[180px] ${bookCardHeightClassName} overflow-hidden rounded-2xl bg-white/60 transition-all duration-300 hover:scale-105 ${bookCardShadowClassName}`}
           >
             <Image
-              src={image || BG_IMAGE}
+              src={image || DEFAULT_COVER_IMAGE}
               alt={title}
               fill
               className="object-cover"

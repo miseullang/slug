@@ -6,7 +6,6 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import Image from "next/image";
-import BG_IMAGE from "@assets/images/BG.jpg";
 import {
   ChatBubbleLeftEllipsisIcon,
   Square2StackIcon,
@@ -19,6 +18,8 @@ type PostItemProps = {
   post: Post;
   commentCount?: number;
 };
+
+const DEFAULT_COVER_IMAGE = "/assets/images/BG.jpg";
 
 export default function PostItem({ post, commentCount = 0 }: PostItemProps) {
   const formattedDate = new Intl.DateTimeFormat("ko-KR", {
@@ -48,7 +49,7 @@ export default function PostItem({ post, commentCount = 0 }: PostItemProps) {
     >
       <figure className="w-full h-[200px] max-[962px]:h-[250px] max-[800px]:h-[200px] max-[639px]:h-[250px] max-[450px]:h-[200px] relative group-hover:translate-y-[-10px] transition-all duration-300">
         <Image
-          src={BG_IMAGE}
+          src={DEFAULT_COVER_IMAGE}
           alt={post.title}
           fill
           className="object-cover aspect-ratio-300/200 rounded-3xl"
