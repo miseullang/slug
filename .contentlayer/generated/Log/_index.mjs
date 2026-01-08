@@ -2,5 +2,6 @@
 
 import logs__1Mdx from './logs__1.mdx.json' assert { type: 'json' }
 import logs__2Mdx from './logs__2.mdx.json' assert { type: 'json' }
+import logs__3Mdx from './logs__3.mdx.json' assert { type: 'json' }
 
-export const allLogs = [logs__1Mdx, logs__2Mdx]
+export const allLogs = [logs__1Mdx, logs__2Mdx, logs__3Mdx]

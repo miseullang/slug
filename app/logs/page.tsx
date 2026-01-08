@@ -2,6 +2,7 @@ import { allDocuments } from "contentlayer/generated";
 import Book, { PlaceholderBook } from "./components/book";
 import Bookshelf from "./components/bookshelf";
 import BG from "@/app/assets/images/BG.jpg";
+import bookCover from "@/app/assets/images/book-cover.png";
 import devcourse from "@/app/assets/images/devcourse.png";
 import dive2025 from "@/app/assets/images/dive2025.png";
 import opensource2024 from "@/app/assets/images/opensource2024.jpg";
@@ -21,6 +22,7 @@ type LogDocument = {
 };
 
 const coverMap: Record<string, StaticImageData> = {
+  bookCover,
   bg: BG,
   devcourse,
   dive2025,

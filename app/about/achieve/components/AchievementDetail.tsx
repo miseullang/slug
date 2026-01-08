@@ -17,7 +17,7 @@ const AchievementDetail = ({
   showActions = false,
 }: AchievementDetailProps) => {
   const metaRows = [
-    { label: "주최기관", value: item.host },
+    { label: "주최/주관", value: item.host },
     { label: "수상일자", value: item.date },
     ...(item.link
       ? [
@@ -30,7 +30,7 @@ const AchievementDetail = ({
                 rel="noopener noreferrer"
                 className="inline-flex text-sm font-medium text-foreground/80 underline-offset-4 hover:underline"
               >
-                부산일보 기사
+                {item.link}
               </a>
             ),
           },
@@ -39,33 +39,41 @@ const AchievementDetail = ({
   ];
 
   const projectRows = [
-    {
-      label: "깃허브 링크",
-      value: (
-        <a
-          href="https://github.com/Busan-Dream"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="inline-flex text-sm font-medium text-foreground/80 underline-offset-4 hover:underline"
-        >
-          깃허브 링크
-        </a>
-      ),
-    },
-    {
-      label: "배포 링크",
-      value: (
-        <a
-          href="https://www.busan-dream.co.kr"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="inline-flex text-sm font-medium text-foreground/80 underline-offset-4 hover:underline"
-        >
-          배포 링크
-        </a>
-      ),
-    },
-  ]
+    ...(item.githubLink
+      ? [
+          {
+            label: "깃허브 링크",
+            value: (
+              <a
+                href={item.githubLink}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex text-sm font-medium text-foreground/80 underline-offset-4 hover:underline"
+              >
+                {item.githubLink}
+              </a>
+            ),
+          },
+        ]
+      : []),
+    ...(item.deployLink
+      ? [
+          {
+            label: "배포 링크",
+            value: (
+              <a
+                href={item.deployLink}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex text-sm font-medium text-foreground/80 underline-offset-4 hover:underline"
+              >
+                {item.deployLink}
+              </a>
+            ),
+          },
+        ]
+      : []),
+  ];
 
   return (
     <div className="relative flex flex-col gap-6">
@@ -91,7 +99,7 @@ const AchievementDetail = ({
           </div>
         ) : null}
       </header>
-      <article className="flex justify-between gap-6">
+      <article className="flex flex-col md:flex-row justify-between gap-6">
         <div className="space-y-3">
           <div className="space-y-1">
             <h1 className="text-4xl font-semibold">{item.event}</h1>
@@ -100,31 +108,34 @@ const AchievementDetail = ({
               {item.award}
             </p>
           </div>
-          
+
           <div className="space-y-1.5">
-          {metaRows.map((row) => (
-            <div
-              key={row.label}
-              className="flex flex-wrap items-center gap-x-4 text-sm text-foreground/60"
-            >
-              <span className="bg-foreground/10 rounded-sm px-2 py-0.5 text-xs text-foreground/70">
-                {row.label}
-              </span>
-              <span>{row.value}</span>
-            </div>
-          ))}
-          <hr className="border-foreground/10" />
-          {projectRows.map((row) => (
-            <div
-              key={row.label}
-              className="flex flex-wrap items-center gap-x-4 text-sm text-foreground/60"
-            >
-              <span className="bg-foreground/10 rounded-sm px-2 py-0.5 text-xs text-foreground/70">
-                {row.label}
-              </span>
-              <span>{row.value}</span>
-            </div>
-          ))}
+            {metaRows.map((row) => (
+              <div
+                key={row.label}
+                className="flex flex-wrap items-center gap-x-4 text-sm text-foreground/60"
+              >
+                <span className="bg-foreground/10 rounded-sm px-2 py-0.5 text-xs text-foreground/70 w-[11ch] text-center">
+                  {row.label}
+                </span>
+                <span>{row.value}</span>
+              </div>
+            ))}
+            <hr className="border-foreground/10" />
+            {projectRows.map((row) => (
+              <div
+                key={row.label}
+                className="flex flex-wrap items-center gap-x-4 text-sm text-foreground/60"
+              >
+                <span className="bg-foreground/10 rounded-sm px-2 py-0.5 text-xs text-foreground/70 w-[11ch] text-center">
+                  {row.label}
+                </span>
+                <span>{row.value}</span>
+              </div>
+            ))}
+            {item.summary ? (
+              <p className="text-foreground/70 py-5">{item.summary}</p>
+            ) : null}
           </div>
         </div>
         <PosterPreview
@@ -132,34 +143,6 @@ const AchievementDetail = ({
           alt={`${item.event} 포스터 크게 보기`}
         />
       </article>
-
-      <p>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quos.
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, Lorem
-        ipsum dolor sit amet consectetur adipisicing elit. Quisquam, Lorem ipsum
-        dolor sit amet consectetur adipisicing elit. Quisquam, Lorem ipsum dolor
-        sit amet consectetur adipisicing elit. Quisquam, Lorem ipsum dolor sit
-        amet consectetur adipisicing elit. Quisquam, Lorem ipsum dolor sit amet
-        consectetur adipisicing elit. Quisquam, Lorem ipsum dolor sit amet
-        consectetur adipisicing elit. Quisquam, quos.Lorem ipsum dolor sit amet
-        consectetur adipisicing elit. Quisquam, quos.Lorem ipsum dolor sit amet
-        consectetur adipisicing elit. Quisquam, quos.Lorem ipsum dolor sit amet
-        consectetur adipisicing elit. Quisquam, quos.Lorem ipsum dolor sit amet
-        consectetur adipisicing elit. Quisquam, quos.Lorem ipsum dolor sit amet
-        consectetur adipisicing elit. Quisquam, quos.Lorem ipsum dolor sit amet
-        consectetur adipisicing elit. Quisquam, quos.Lorem ipsum dolor sit amet
-        consectetur adipisicing elit. Quisquam, quos.Lorem ipsum dolor sit amet
-        consectetur adipisicing elit. Quisquam, quos.Lorem ipsum dolor sit amet
-        consectetur adipisicing elit. Quisquam, quos.Lorem ipsum dolor sit amet
-        consectetur adipisicing elit. Quisquam, quos.Lorem ipsum dolor sit amet
-        consectetur adipisicing elit. Quisquam, quos.Lorem ipsum dolor sit amet
-        consectetur adipisicing elit. Quisquam, quos.Lorem ipsum dolor sit amet
-        consectetur adipisicing elit. Quisquam, quos.Lorem ipsum dolor sit amet
-        consectetur adipisicing elit. Quisquam, quos.Lorem ipsum dolor sit amet
-        consectetur adipisicing elit. Quisquam, quos.Lorem ipsum dolor sit amet
-        consectetur adipisicing elit. Quisquam, quos.Lorem ipsum dolor sit amet
-        consectetur adipisicing elit. Quisquam, quos.
-      </p>
     </div>
   );
 };
