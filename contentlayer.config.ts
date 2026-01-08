@@ -47,6 +47,7 @@ const Post = defineDocumentType(() => ({
     summary: { type: "string", required: false },
     giscusId: { type: "string", required: false },
     category: { type: "string", required: true },
+    cover: { type: "string", required: false },
   },
   computedFields: {
     slug: {

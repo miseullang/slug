@@ -19,6 +19,12 @@ export async function generateMetadata({
 
   const siteUrl = "https://seulslug.vercel.app";
   const postUrl = `${siteUrl}/post/${postId}`;
+  const coverImage =
+    typeof post.cover === "string" &&
+    post.cover.length > 0 &&
+    (post.cover.startsWith("/") || post.cover.startsWith("http"))
+      ? post.cover
+      : "/assets/images/BG.jpg";
 
   return {
     title: post.title,
@@ -32,7 +38,7 @@ export async function generateMetadata({
       locale: "ko_KR",
       images: [
         {
-          url: "/assets/images/BG.jpg",
+          url: coverImage,
           width: 1200,
           height: 630,
           alt: post.title,
@@ -43,7 +49,7 @@ export async function generateMetadata({
       card: "summary_large_image",
       title: post.title,
       description: post.summary ?? post.title,
-      images: ["/assets/images/BG.jpg"],
+      images: [coverImage],
     },
   };
 }

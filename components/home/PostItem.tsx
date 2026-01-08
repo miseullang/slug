@@ -20,6 +20,10 @@ type PostItemProps = {
 };
 
 const DEFAULT_COVER_IMAGE = "/assets/images/BG.jpg";
+const isValidCover = (cover?: string) =>
+  typeof cover === "string" &&
+  cover.length > 0 &&
+  (cover.startsWith("/") || cover.startsWith("http"));
 
 export default function PostItem({ post, commentCount = 0 }: PostItemProps) {
   const formattedDate = new Intl.DateTimeFormat("ko-KR", {
@@ -49,7 +53,7 @@ export default function PostItem({ post, commentCount = 0 }: PostItemProps) {
     >
       <figure className="w-full h-[200px] max-[962px]:h-[250px] max-[800px]:h-[200px] max-[639px]:h-[250px] max-[450px]:h-[200px] relative group-hover:translate-y-[-10px] transition-all duration-300">
         <Image
-          src={DEFAULT_COVER_IMAGE}
+          src={isValidCover(post.cover) ? post.cover : DEFAULT_COVER_IMAGE}
           alt={post.title}
           fill
           className="object-cover aspect-ratio-300/200 rounded-3xl"
