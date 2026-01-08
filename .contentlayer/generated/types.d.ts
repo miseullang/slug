@@ -35,6 +35,7 @@ export type Post = {
   tags?: string[] | undefined
   summary?: string | undefined
   giscusId?: string | undefined
+  category: string
   /** MDX file body */
   body: MDX
   slug: string
