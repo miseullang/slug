@@ -99,7 +99,7 @@ const AchievementDetail = ({
           </div>
         ) : null}
       </header>
-      <article className="flex justify-between gap-6">
+      <article className="flex flex-col md:flex-row justify-between gap-6">
         <div className="space-y-3">
           <div className="space-y-1">
             <h1 className="text-4xl font-semibold">{item.event}</h1>

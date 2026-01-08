@@ -26,7 +26,7 @@ const PosterPreview = ({ src, alt }: PosterPreviewProps) => {
             setIsOpen(true);
           }
         }}
-        className="relative w-[280px] flex-shrink-0 aspect-[210/297] overflow-hidden rounded-2xl border border-foreground/10 bg-foreground/5 cursor-pointer"
+        className="relative w-full md:w-[280px] md:flex-shrink-0 aspect-[210/297] overflow-hidden rounded-2xl border border-foreground/10 bg-foreground/5 cursor-pointer"
       >
         <span
           aria-hidden="true"
