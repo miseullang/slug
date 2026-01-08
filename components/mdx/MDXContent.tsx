@@ -49,6 +49,13 @@ const Hr = ({ className, ...props }: HTMLAttributes<HTMLHRElement>) => (
   />
 );
 
+const Paragraph = ({
+  className,
+  ...props
+}: HTMLAttributes<HTMLParagraphElement>) => {
+  return <p className={cn("space-y-2", className)} {...props} />;
+};
+
 function createHeading(level: 2 | 3 | 4) {
   const Component = ({
     className,
@@ -97,6 +104,7 @@ const components = {
   th: TableHeaderCell,
   td: TableCell,
   hr: Hr,
+  p: Paragraph,
   h2: H2,
   h3: H3,
   h4: H4,

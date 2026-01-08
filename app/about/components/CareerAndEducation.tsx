@@ -12,6 +12,7 @@ import PROGRAMMERS_LOGO from "@assets/logo/programmers.webp";
 import LogoLoop from "components/ui/logo-loop";
 import {
   SiCssmodules,
+  SiNextdotjs,
   SiReact,
   SiSocketdotio,
   SiTypescript,
@@ -20,13 +21,15 @@ import {
 const CAREER_ITEMS = [
   {
     id: "item-1",
-    role: "프론트엔드 개발자 · 시니어 케어 플랫폼 케어벨 BO 개발 및 유지보수",
+    role: "프론트엔드 개발자 · 시니어 케어 플랫폼 케어벨 BO, 앱 개발 및 유지보수",
     company: "@zeroweb",
     badge: ["B2B", "B2C", "B2G"],
     stack: [
       { label: "TypeScript", Icon: SiTypescript },
       { label: "Module CSS", Icon: SiCssmodules },
       { label: "ReactJS", Icon: SiReact },
+      { label: "React Native", Icon: SiReact },
+      { label: "Next.js", Icon: SiNextdotjs },
       { label: "Socket.IO", Icon: SiSocketdotio },
     ],
     period: "2025.05.07 ~ present",
@@ -50,7 +53,9 @@ const CAREER_ITEMS = [
       },
       {
         title: "3. 파트너사 제휴 페이지 FE 파트 주도 개발",
-        details: ["페이지 로딩 성능 최적화 및 렌더링 비용 감소 작업 주도 (CLS 점수 0.27 -> 0.1)"],
+        details: [
+          "페이지 로딩 성능 최적화 및 렌더링 비용 감소 작업 (CLS 점수 0.27 -> 0.1)",
+        ],
       },
       {
         title: "4. 사내 패키지 유지보수",
@@ -155,7 +160,9 @@ const CareerAndEducation = () => {
             <AccordionContent className={contentClassName}>
               <ul
                 className={`${listClassName} ${
-                  item.highlights.every((highlight) => typeof highlight === "string")
+                  item.highlights.every(
+                    (highlight) => typeof highlight === "string"
+                  )
                     ? "list-disc list-inside"
                     : ""
                 }`}
