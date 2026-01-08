@@ -1,12 +1,6 @@
 import { allDocuments } from "contentlayer/generated";
 import Book, { PlaceholderBook } from "./components/book";
 import Bookshelf from "./components/bookshelf";
-import BG from "@/app/assets/images/BG.jpg";
-import bookCover from "@/app/assets/images/book-cover.png";
-import devcourse from "@/app/assets/images/devcourse.png";
-import dive2025 from "@/app/assets/images/dive2025.png";
-import opensource2024 from "@/app/assets/images/opensource2024.jpg";
-import type { StaticImageData } from "next/image";
 
 const getDeterministicTilt = (seed: string) =>
   seed.split("").reduce((acc, char) => acc + char.charCodeAt(0), 0) % 2 === 0
@@ -20,17 +14,6 @@ type LogDocument = {
   cover?: string;
   _raw?: { flattenedPath?: string };
 };
-
-const coverMap: Record<string, StaticImageData> = {
-  bookCover,
-  bg: BG,
-  devcourse,
-  dive2025,
-  opensource2024,
-};
-
-const getCoverImage = (cover?: string) =>
-  cover && coverMap[cover] ? coverMap[cover] : undefined;
 
 const getLogSlug = (log: LogDocument) =>
   log.slug ?? log._raw?.flattenedPath?.replace(/^logs\//, "") ?? log.title;
@@ -51,13 +34,13 @@ const LogsPage = () => {
       title: log.title,
       date: formatLogDate(log.date),
       slug: getLogSlug(log),
-      cover: getCoverImage(log.cover),
+      cover: log.cover,
     }))
     .sort((a, b) => b.date.localeCompare(a.date));
 
   const booksPerShelf = 8;
   const shelves = logs.reduce<
-    { title: string; date: string; slug: string; cover?: StaticImageData }[][]
+    { title: string; date: string; slug: string; cover?: string }[][]
   >((rows, book, index) => {
     const rowIndex = Math.floor(index / booksPerShelf);
     if (!rows[rowIndex]) {
