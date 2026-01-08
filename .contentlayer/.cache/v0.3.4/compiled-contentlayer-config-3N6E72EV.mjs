@@ -33,7 +33,8 @@ var Post = defineDocumentType(() => ({
     date: { type: "date", required: true },
     tags: { type: "list", of: { type: "string" }, required: false },
     summary: { type: "string", required: false },
-    giscusId: { type: "string", required: false }
+    giscusId: { type: "string", required: false },
+    category: { type: "string", required: true }
   },
   computedFields: {
     slug: {
@@ -80,4 +81,4 @@ var contentlayer_config_default = makeSource({
 export {
   contentlayer_config_default as default
 };
-//# sourceMappingURL=compiled-contentlayer-config-6MDBGQWT.mjs.map
+//# sourceMappingURL=compiled-contentlayer-config-3N6E72EV.mjs.map

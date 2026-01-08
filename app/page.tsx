@@ -5,18 +5,29 @@ import { allPosts } from "contentlayer/generated";
 import PostSections from "@/components/home/PostSections";
 import { fetchDiscussionCommentCounts } from "@/lib/giscus";
 
-export default async function Home() {
+type HomeProps = {
+  searchParams?: {
+    category?: string;
+  };
+};
+
+export default async function Home({ searchParams }: HomeProps) {
+  const resolvedSearchParams = await searchParams;
+  const selectedCategory = resolvedSearchParams?.category;
   // 날짜순으로 정렬 (최신순)
   const sortedPosts = [...allPosts].sort((a, b) => {
     return new Date(b.date).getTime() - new Date(a.date).getTime();
   });
 
-  // 최근 게시글 (전체 게시글)
-  const recentPosts = sortedPosts;
+  const filteredPosts = selectedCategory
+    ? sortedPosts.filter((post) => post.category === selectedCategory)
+    : sortedPosts;
 
-  // 추천 게시글 (현재는 최근 게시글과 동일하게 표시)
-  const recommendedPosts = sortedPosts;
-  const merged = [...recentPosts, ...recommendedPosts];
+  const recentPosts = filteredPosts;
+
+  const recommendedPosts = filteredPosts;
+  
+  const merged = [...filteredPosts];
   const paths = Array.from(new Set(merged.map((post) => `/post/${post.slug}`)));
   const commentCounts =
     paths.length > 0 ? await fetchDiscussionCommentCounts(paths) : {};
